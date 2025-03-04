@@ -62,11 +62,7 @@ const BeadSelection = () => {
 			{ name: "sand", multiBeads: false },
 			{ name: "sapphire", multiBeads: false },
 			{ name: "stone", multiBeads: false },
-			{
-				name: "storm",
-				multiBeads: true,
-				variants: ["storm_dark", "storm_gray_blue"],
-			},
+			{ name: "storm", multiBeads: false },
 			{ name: "sunshine", multiBeads: false },
 			{ name: "teal", multiBeads: false },
 			{ name: "turquoise", multiBeads: false },
