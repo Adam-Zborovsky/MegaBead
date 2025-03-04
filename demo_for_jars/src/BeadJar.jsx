@@ -4,10 +4,19 @@ import lidImage from "./images/Lid.png";
 import floatingLid from "./images/Floating_Lid.png";
 import "./BeadJar.css";
 
-const BeadJar = ({ jarImage, beadImage, beadColor, onClick }) => {
+const BeadJar = ({
+	jarImage,
+	beadImage,
+	beadColor,
+	onClick,
+	isMultiBead,
+	beadVariants,
+}) => {
 	const [isHovered, setIsHovered] = useState(false);
+	const [currentBeadIndex, setCurrentBeadIndex] = useState(0);
 	const containerRef = useRef(null);
 	const [containerHeight, setContainerHeight] = useState(0);
+	const intervalRef = useRef(null);
 
 	useEffect(() => {
 		if (containerRef.current) {
@@ -22,10 +31,22 @@ const BeadJar = ({ jarImage, beadImage, beadColor, onClick }) => {
 		}
 	}, []);
 
-	// For debugging - log state changes
 	useEffect(() => {
-		console.log("Hover state changed:", isHovered);
-	}, [isHovered]);
+		if (isMultiBead && beadVariants && beadVariants.length > 1 && isHovered) {
+			intervalRef.current = setInterval(() => {
+				setCurrentBeadIndex((prevIndex) =>
+					prevIndex === beadVariants.length - 1 ? 0 : prevIndex + 1
+				);
+			}, 1500); // Change bead every second
+
+			return () => {
+				if (intervalRef.current) {
+					clearInterval(intervalRef.current);
+					setCurrentBeadIndex(0);
+				}
+			};
+		}
+	}, [isHovered, isMultiBead, beadVariants]);
 
 	const getBeadAnimation = () => {
 		const animationDistance = containerHeight * 0.4;
@@ -39,7 +60,14 @@ const BeadJar = ({ jarImage, beadImage, beadColor, onClick }) => {
 			},
 		};
 	};
-	console.log("BeadJar", jarImage);
+
+	const getCurrentBeadImage = () => {
+		if (isMultiBead && beadVariants && beadVariants.length > 0) {
+			return beadVariants[currentBeadIndex];
+		}
+		return beadImage;
+	};
+
 	return (
 		<div
 			ref={containerRef}
@@ -50,7 +78,7 @@ const BeadJar = ({ jarImage, beadImage, beadColor, onClick }) => {
 		>
 			<div className="debug-border">
 				<motion.img
-					src={beadImage}
+					src={getCurrentBeadImage()}
 					alt={`${beadColor} bead`}
 					className="bead-image"
 					initial={{ opacity: 0, y: 0 }}
@@ -102,7 +130,11 @@ const BeadJar = ({ jarImage, beadImage, beadColor, onClick }) => {
 				</AnimatePresence>
 			</div>
 
-			<div className="debug-info">Hovered: {isHovered ? "Yes" : "No"}</div>
+			<div className="debug-info">
+				Hovered: {isHovered ? "Yes" : "No"}
+				{isMultiBead &&
+					` | Bead: ${currentBeadIndex + 1}/${beadVariants.length}`}
+			</div>
 		</div>
 	);
 };
