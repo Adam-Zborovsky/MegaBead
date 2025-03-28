@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import lidImage from "../images/Lid.png";
 import floatingLid from "../images/Floating_Lid.png";
-import "./BeadJar.css";
+import "../style/BeadJar.css";
 
 const BeadJar = ({
 	jarImage,
@@ -37,7 +37,7 @@ const BeadJar = ({
 				setCurrentBeadIndex((prevIndex) =>
 					prevIndex === beadVariants.length - 1 ? 0 : prevIndex + 1
 				);
-			}, 1500); // Change bead every second
+			}, 1500);
 
 			return () => {
 				if (intervalRef.current) {
@@ -48,9 +48,15 @@ const BeadJar = ({
 		}
 	}, [isHovered, isMultiBead, beadVariants]);
 
+	const getCurrentBeadImage = () => {
+		if (isMultiBead && beadVariants && beadVariants.length > 0) {
+			return beadVariants[currentBeadIndex];
+		}
+		return beadImage;
+	};
+
 	const getBeadAnimation = () => {
 		const animationDistance = containerHeight * 0.4;
-
 		return {
 			opacity: isHovered ? 1 : 0,
 			y: isHovered ? -animationDistance : 0,
@@ -61,11 +67,22 @@ const BeadJar = ({
 		};
 	};
 
-	const getCurrentBeadImage = () => {
+	const handleClick = () => {
+		let chosenImage;
 		if (isMultiBead && beadVariants && beadVariants.length > 0) {
-			return beadVariants[currentBeadIndex];
+			// Choose a random index from the beadVariants array
+			const randomIndex = Math.floor(Math.random() * beadVariants.length);
+			chosenImage = beadVariants[randomIndex];
+		} else {
+			chosenImage = beadImage;
 		}
-		return beadImage;
+
+		if (onClick) {
+			onClick({
+				name: beadColor,
+				image: chosenImage,
+			});
+		}
 	};
 
 	return (
@@ -74,7 +91,7 @@ const BeadJar = ({
 			className="bead-jar-container"
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}
-			onClick={() => onClick && onClick(beadColor)}
+			onClick={handleClick}
 		>
 			<div className="bead-jar-layout">
 				<motion.img
@@ -130,6 +147,7 @@ const BeadJar = ({
 				</AnimatePresence>
 			</div>
 
+			{/* Debug or additional info */}
 			<div className="debug-info">
 				Hovered: {isHovered ? "Yes" : "No"}
 				{isMultiBead &&

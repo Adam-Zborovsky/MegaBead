@@ -1,7 +1,7 @@
-import BeadSelection from "./pages/BeadSelection";
+import Builder from "./pages/Builder";
 
 function App() {
-	return <BeadSelection />;
+	return <Builder />;
 }
 
 export default App;

@@ -1,8 +1,8 @@
+// BeadSelection.jsx
 import { useState, useEffect } from "react";
-import BeadJar from "../components/BeadJar";
+import BeadJar from "./BeadJar";
 
-const BeadSelection = () => {
-	const [selectedBeads, setSelectedBeads] = useState([]);
+const BeadSelection = ({ onBeadSelect }) => {
 	const [beadsToLoad, setBeadsToLoad] = useState([]);
 
 	useEffect(() => {
@@ -71,18 +71,21 @@ const BeadSelection = () => {
 		setBeadsToLoad(beadTypes);
 	}, []);
 
-	const handleBeadSelect = (beadColor) => {
-		console.log("Bead selected:", beadColor);
-		setSelectedBeads([...selectedBeads, beadColor]);
+	// We simply pass along the data from BeadJar to the parent
+	const handleBeadSelect = (beadData) => {
+		console.log("Bead selected:", beadData);
+		onBeadSelect(beadData);
 	};
 
 	return (
-		<div className="container py-4">
-			<h2 className="text-primary mb-4">Select Beads</h2>
-
-			<div className="row g-4 justify-content-center">
+		<div className="container">
+			{/* 
+        1) Reduce the gutter from g-2 to g-1 or g-0 for tighter spacing
+        2) Change col-4 to col-3 or col-2 if you want them even closer
+      */}
+			<div className="row g-2 justify-content-center">
 				{beadsToLoad.map((bead) => (
-					<div key={bead.name} className="col-6 col-sm-4 col-md-3 col-lg-2">
+					<div key={bead.name} className="col-4">
 						<BeadJar
 							jarImage={`../images/${bead.name}/jar.png`}
 							beadImage={
@@ -103,13 +106,6 @@ const BeadSelection = () => {
 						/>
 					</div>
 				))}
-			</div>
-
-			<div className="mt-4 p-3 bg-light rounded-3 shadow-sm">
-				<p className="mb-0">
-					<span className="text-secondary">Selected beads:</span>{" "}
-					<span className="text-primary">{selectedBeads.join(", ")}</span>
-				</p>
 			</div>
 		</div>
 	);
