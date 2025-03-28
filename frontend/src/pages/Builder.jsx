@@ -18,20 +18,18 @@ function Builder() {
 		}
 	};
 	useEffect(() => {
+		setIsFull(false);
 		setNecklaceBeads([]);
 	}, [necklaceLength]);
 	return (
 		<div className="row g-0" style={{ height: "100vh" }}>
-			{/* Left: Bead List */}
 			<div className="col-md-2" style={{ overflowY: "auto" }}>
 				<BeadList beads={necklaceBeads} isFull={isFull} />
 			</div>
 
-			{/* Center: Necklace & length card */}
 			<div className="col-md-7 d-flex flex-column justify-content-start align-items-center">
-				{/* The necklace area (fills remaining vertical space) */}
-
 				<Necklace beads={necklaceBeads} length={necklaceLength} />
+
 				<NecklaceLengthOptions
 					length={necklaceLength}
 					onLengthChange={setNecklaceLength}
