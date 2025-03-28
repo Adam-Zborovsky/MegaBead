@@ -7,47 +7,43 @@ gsap.registerPlugin(MotionPathPlugin);
 const Necklace = ({ beads = [], length = 42 }) => {
 	const necklaceRef = useRef(null);
 	const beadContainerRef = useRef(null);
-	const prevBeadsRef = useRef(null);
-	const scaleFactor = length / 42;
+	const prevBeadsRef = useRef([]);
+	const groupRef = useRef(null);
 
+	const beadPixelWidth = 15;
+	const capacity = Math.floor((length / 10) * 35);
+
+	// We define a gapFactor < 1 to reduce spacing
+	const gapFactor = 0.65; // adjust to 0.9, 0.7, etc. until it looks right
+
+	// Instead of capacity * beadPixelWidth, we multiply by gapFactor
+	// and use (capacity - 1) because the offset from 1→0 is split into (capacity-1) intervals
+	const desiredPathLength = (capacity - 1) * beadPixelWidth * gapFactor;
+
+	// Scale the base path so its arc length ~ desiredPathLength
+	useEffect(() => {
+		if (groupRef.current) {
+			const pathEl = groupRef.current.querySelector("#necklacePath");
+			if (pathEl) {
+				const baseLength = pathEl.getTotalLength();
+				const scaleFactor = desiredPathLength / baseLength;
+				gsap.set(groupRef.current, {
+					scale: scaleFactor,
+					transformOrigin: "50% 50%",
+				});
+			}
+		}
+	}, [length, desiredPathLength]);
+
+	// Animate new beads
 	useEffect(() => {
 		if (beads.length && beadContainerRef.current && necklaceRef.current) {
 			const newBead = beadContainerRef.current.lastElementChild;
 			if (newBead) {
 				const tl = gsap.timeline();
 
-				// -- 1) Measure the necklace path length in "user coordinates" --
-				const pathEl = necklaceRef.current.querySelector("#necklacePath");
-				// getTotalLength() returns the length of the path in the SVG’s coordinate system
-				const pathLength = pathEl.getTotalLength();
-
-				// -- 2) Convert your bead’s pixel width into SVG user coordinates --
-				// measure how large the SVG is currently rendered (in px),
-				// compute the scale factor relative to the viewBox.
-				const svg = necklaceRef.current.querySelector("svg");
-				const svgRect = svg.getBoundingClientRect();
-				const scaleX = svgRect.width / 1000;
-
-				// Convert bead width from pixels to SVG user units.
-				const beadPixelWidth = 20;
-				const beadWidthInUserUnits = beadPixelWidth / scaleX;
-
-				// Calculate how much of the path each bead occupies.
-				const offsetPerBead = beadWidthInUserUnits / pathLength;
-				const effectiveOffsetPerBead = offsetPerBead * 0.9;
-
-				const beadIndex = beads.length - 1;
-				let targetOffset = 1 - beadIndex * effectiveOffsetPerBead;
-				if (targetOffset < 0) {
-					targetOffset = 0;
-				}
-
-				// -- 4) Animate: Phase 1 (dropPath) then Phase 2 (necklacePath) --
-
-				// Start invisible and scaled down
+				// 1) Drop from the drop path
 				tl.set(newBead, { opacity: 0, scale: 0 });
-
-				// Drop from offscreen along the invisible drop path
 				tl.to(newBead, {
 					duration: 0.5,
 					ease: "power1.inOut",
@@ -63,24 +59,31 @@ const Necklace = ({ beads = [], length = 42 }) => {
 					},
 				});
 
-				// Slide along the visible necklace path to targetOffset
-				tl.to(newBead, {
-					duration: 2,
-					ease: "power1.inOut",
-					motionPath: {
-						path: "#necklacePath",
-						align: "#necklacePath",
-						autoRotate: true,
-						alignOrigin: [0.5, 0.5],
-						start: 0,
-						end: targetOffset,
-					},
-				});
+				// 2) Slide along the necklace path
+				const i = beads.length - 1;
+				if (capacity > 1) {
+					let offsetFrac = 1 - i / (capacity - 1);
+					if (offsetFrac < 0) offsetFrac = 0;
+					if (offsetFrac > 1) offsetFrac = 1;
+
+					tl.to(newBead, {
+						duration: 2,
+						ease: "power1.inOut",
+						motionPath: {
+							path: "#necklacePath",
+							align: "#necklacePath",
+							autoRotate: true,
+							alignOrigin: [0.5, 0.5],
+							start: 0,
+							end: offsetFrac,
+						},
+					});
+				}
 			}
-		} // If a bead was removed
+		}
+
+		// Removal animation if needed
 		if (prevBeadsRef.current.length > beads.length) {
-			// Determine the index that was removed:
-			// We'll assume the removed bead is the one missing in the new array
 			let removedIndex = -1;
 			for (let i = 0; i < prevBeadsRef.current.length; i++) {
 				if (!beads.find((b) => b.id === prevBeadsRef.current[i].id)) {
@@ -91,16 +94,13 @@ const Necklace = ({ beads = [], length = 42 }) => {
 			if (removedIndex !== -1 && beadContainerRef.current) {
 				const beadElements = beadContainerRef.current.children;
 				const removedEl = beadElements[removedIndex];
-				// Animate the removed bead toward the middle of the U and fade out
 				gsap.to(removedEl, {
 					duration: 1,
-					x: 0, // adjust as needed for the U's center
-					y: 50, // move downward; adjust for your U shape
+					x: 0,
+					y: 50,
 					opacity: 0,
 					ease: "power2.inOut",
 					onComplete: () => {
-						// After removal animation, animate remaining beads to shift
-						// We'll animate beads with index > removedIndex to move down by 20px
 						for (let j = removedIndex; j < beadElements.length; j++) {
 							gsap.to(beadElements[j], {
 								duration: 0.5,
@@ -113,7 +113,7 @@ const Necklace = ({ beads = [], length = 42 }) => {
 			}
 		}
 		prevBeadsRef.current = beads;
-	}, [beads]);
+	}, [beads, capacity]);
 
 	return (
 		<div
@@ -132,12 +132,18 @@ const Necklace = ({ beads = [], length = 42 }) => {
 				viewBox="0 0 1000 600"
 				preserveAspectRatio="xMidYMid meet"
 			>
-				<g transform={`scale(${scaleFactor})`} transformOrigin="50% 50%">
+				<g ref={groupRef}>
+					<path
+						id="dropPath"
+						d="M450,-350 L600,-25"
+						fill="none"
+						stroke="none"
+					/>
 					<path
 						id="necklacePath"
-						d="M800,0 C800,800 100,800 100,0"
+						d="M600,-25 C1000,600 0,600 400,-25"
 						stroke="rgb(84,84,84)"
-						strokeWidth="1.5"
+						strokeWidth="2"
 						fill="none"
 					/>
 				</g>
@@ -154,7 +160,10 @@ const Necklace = ({ beads = [], length = 42 }) => {
 						src={bead.image}
 						alt={bead.name}
 						className="position-absolute"
-						style={{ width: "20px", height: "20px" }}
+						style={{
+							width: `${beadPixelWidth}px`,
+							height: `${beadPixelWidth}px`,
+						}}
 					/>
 				))}
 			</div>

@@ -1,7 +1,6 @@
 import "../style/BeadList.css";
 
-const BeadList = ({ beads, onRemoveBead }) => {
-	// Group consecutive beads: each group records the starting index.
+const BeadList = ({ beads, onRemoveBead, isFull }) => {
 	const groups = [];
 	beads.forEach((bead, idx) => {
 		if (
@@ -15,7 +14,10 @@ const BeadList = ({ beads, onRemoveBead }) => {
 	});
 
 	return (
-		<div className="card shadow-sm mb-3" style={{ width: "50%" }}>
+		<div
+			className="card shadow-sm"
+			style={{ width: "50%", margin: "10rem auto" }}
+		>
 			<div className="card-header">
 				<h5 className="card-title mb-0">Bead List</h5>
 			</div>
@@ -45,6 +47,12 @@ const BeadList = ({ beads, onRemoveBead }) => {
 						</span>
 					</li>
 				))}
+				{isFull && (
+					<div className="card-footer d-flex justify-content-around">
+						<button className="btn btn-sm btn-primary">Add To Cart</button>
+						<button className="btn btn-sm btn-danger">Reset</button>
+					</div>
+				)}
 			</ul>
 		</div>
 	);
