@@ -1,12 +1,14 @@
-import { useRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 
 gsap.registerPlugin(MotionPathPlugin);
 
-const Necklace = ({ beads }) => {
+const Necklace = ({ beads = [], length = 42 }) => {
 	const necklaceRef = useRef(null);
 	const beadContainerRef = useRef(null);
+	const prevBeadsRef = useRef(null);
+	const scaleFactor = length / 42;
 
 	useEffect(() => {
 		if (beads.length && beadContainerRef.current && necklaceRef.current) {
@@ -75,7 +77,42 @@ const Necklace = ({ beads }) => {
 					},
 				});
 			}
+		} // If a bead was removed
+		if (prevBeadsRef.current.length > beads.length) {
+			// Determine the index that was removed:
+			// We'll assume the removed bead is the one missing in the new array
+			let removedIndex = -1;
+			for (let i = 0; i < prevBeadsRef.current.length; i++) {
+				if (!beads.find((b) => b.id === prevBeadsRef.current[i].id)) {
+					removedIndex = i;
+					break;
+				}
+			}
+			if (removedIndex !== -1 && beadContainerRef.current) {
+				const beadElements = beadContainerRef.current.children;
+				const removedEl = beadElements[removedIndex];
+				// Animate the removed bead toward the middle of the U and fade out
+				gsap.to(removedEl, {
+					duration: 1,
+					x: 0, // adjust as needed for the U's center
+					y: 50, // move downward; adjust for your U shape
+					opacity: 0,
+					ease: "power2.inOut",
+					onComplete: () => {
+						// After removal animation, animate remaining beads to shift
+						// We'll animate beads with index > removedIndex to move down by 20px
+						for (let j = removedIndex; j < beadElements.length; j++) {
+							gsap.to(beadElements[j], {
+								duration: 0.5,
+								y: "+=20",
+								ease: "power2.inOut",
+							});
+						}
+					},
+				});
+			}
 		}
+		prevBeadsRef.current = beads;
 	}, [beads]);
 
 	return (
@@ -95,26 +132,21 @@ const Necklace = ({ beads }) => {
 				viewBox="0 0 1000 600"
 				preserveAspectRatio="xMidYMid meet"
 			>
-				{/* Invisible drop path*/}
-				<path id="dropPath" d="M800,-350 L800,0" fill="none" stroke="none" />
-
-				{/* Visible necklace path */}
-				<path
-					id="necklacePath"
-					d="M800,0 C800,800 100,800 100,0"
-					fill="none"
-					stroke="rgb(84,84,84)"
-					strokeWidth="1.5"
-				/>
+				<g transform={`scale(${scaleFactor})`} transformOrigin="50% 50%">
+					<path
+						id="necklacePath"
+						d="M800,0 C800,800 100,800 100,0"
+						stroke="rgb(84,84,84)"
+						strokeWidth="1.5"
+						fill="none"
+					/>
+				</g>
 			</svg>
 
 			<div
 				ref={beadContainerRef}
 				className="position-absolute top-0 start-0"
-				style={{
-					width: "100%",
-					height: "100%",
-				}}
+				style={{ width: "100%", height: "100%" }}
 			>
 				{beads.map((bead, index) => (
 					<img

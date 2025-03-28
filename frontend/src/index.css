@@ -1,112 +1,39 @@
 :root {
-	/* Vibrant Base Colors */
-	--bs-primary: #2c3e50; /* Deep midnight blue */
-	--bs-primary-rgb: 44, 62, 80;
+	/* Light Mode - Modern and Sleek */
+	--bs-primary: #0d6efd; /* Vivid Blue */
+	--bs-primary-rgb: 13, 110, 253;
 	--bs-primary-text: #ffffff;
 
-	--bs-secondary: #34495e; /* Slightly lighter blue-gray */
-	--bs-secondary-rgb: 52, 73, 94;
+	--bs-secondary: #6c757d; /* Muted Gray */
+	--bs-secondary-rgb: 108, 117, 125;
 	--bs-secondary-text: #ffffff;
 
-	/* More Saturated Accent Colors */
-	--bs-success: #27ae60; /* Vibrant green */
-	--bs-success-rgb: 39, 174, 96;
+	--bs-success: #198754; /* Strong Green */
+	--bs-success-rgb: 25, 135, 84;
 	--bs-success-text: #ffffff;
 
-	--bs-danger: #e74c3c; /* Bright coral red */
-	--bs-danger-rgb: 231, 76, 60;
+	--bs-danger: #dc3545; /* Vivid Red */
+	--bs-danger-rgb: 220, 53, 69;
 	--bs-danger-text: #ffffff;
 
-	--bs-warning: #f39c12; /* Bright orange */
-	--bs-warning-rgb: 243, 156, 18;
+	--bs-warning: #ffc107; /* Bright Yellow */
+	--bs-warning-rgb: 255, 193, 7;
 	--bs-warning-text: #000000;
 
-	--bs-info: #3498db; /* Bright blue */
-	--bs-info-rgb: 52, 152, 219;
+	--bs-info: #0dcaf0; /* Cyan Blue */
+	--bs-info-rgb: 13, 202, 240;
 	--bs-info-text: #ffffff;
 
-	/* Background and Text */
-	--bs-body-bg: #f7f9f9; /* Very light cool gray */
-	--bs-body-color: #2c3e50; /* Dark blue-gray */
-
-	/* Enhanced Grayscale */
-	--bs-gray-100: #f4f6f7;
-	--bs-gray-200: #ecf0f1;
-	--bs-gray-300: #dee2e6;
-	--bs-gray-400: #ced4da;
-	--bs-gray-500: #b2babb;
-	--bs-gray-600: #7f8c8d;
-	--bs-gray-700: #495057;
-	--bs-gray-800: #34495e;
-	--bs-gray-900: #212f3d;
-
-	/* Custom Jewelry Palette */
-	--bs-gold: #f1c40f; /* Bright gold */
-	--bs-silver: #bdc3c7; /* Cool silver */
-	--bs-bronze: #a04000; /* Rich bronze */
-
-	/* Hover and Interactive States */
-	--bs-primary-hover: #1a242f;
-	--bs-secondary-hover: #2c3e50;
-
-	/* Bead-Inspired Accent Colors */
-	--bs-accent-purple: #8e44ad; /* Rich purple */
-	--bs-accent-blue: #2980b9; /* Bright blue */
-	--bs-accent-green: #27ae60; /* Vibrant green */
+	--bs-body-bg: #f8f9fa; /* Light Gray */
+	--bs-body-color: #212529; /* Dark Gray */
 }
 
-/* Bootstrap Class Overrides */
-.bg-primary {
-	background-color: var(--bs-primary) !important;
-	color: var(--bs-primary-text) !important;
+/* Essential Bootstrap Overrides */
+body {
+	background-color: var(--bs-body-bg);
+	color: var(--bs-body-color);
 }
 
-.bg-secondary {
-	background-color: var(--bs-secondary) !important;
-	color: var(--bs-secondary-text) !important;
-}
-
-.bg-success {
-	background-color: var(--bs-success) !important;
-	color: var(--bs-success-text) !important;
-}
-
-.bg-danger {
-	background-color: var(--bs-danger) !important;
-	color: var(--bs-danger-text) !important;
-}
-
-.bg-warning {
-	background-color: var(--bs-warning) !important;
-	color: var(--bs-warning-text) !important;
-}
-
-.bg-info {
-	background-color: var(--bs-info) !important;
-	color: var(--bs-info-text) !important;
-}
-
-/* Text Color Overrides */
-.text-primary {
-	color: var(--bs-primary) !important;
-}
-.text-secondary {
-	color: var(--bs-secondary) !important;
-}
-.text-success {
-	color: var(--bs-success) !important;
-}
-.text-danger {
-	color: var(--bs-danger) !important;
-}
-.text-warning {
-	color: var(--bs-warning) !important;
-}
-.text-info {
-	color: var(--bs-info) !important;
-}
-
-/* Button and Interactive Element Styles */
 .btn-primary {
 	background-color: var(--bs-primary);
 	border-color: var(--bs-primary);
@@ -114,16 +41,6 @@
 }
 
 .btn-primary:hover {
-	background-color: var(--bs-primary-hover);
-	border-color: var(--bs-primary-hover);
-}
-
-body {
-	background-color: var(--bs-body-bg);
-	color: var(--bs-body-color);
-}
-
-::selection {
-	background-color: var(--bs-primary);
-	color: var(--bs-primary-text);
+	background-color: #0a58ca;
+	border-color: #0a53be;
 }

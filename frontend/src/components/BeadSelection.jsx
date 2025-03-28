@@ -76,7 +76,7 @@ const BeadSelection = ({ onBeadSelect }) => {
 	};
 
 	return (
-		<div className="container">
+		<div className="container py-2">
 			<div className="row g-2 justify-content-center">
 				{beadsToLoad.map((bead) => (
 					<div key={bead.name} className="col-4">

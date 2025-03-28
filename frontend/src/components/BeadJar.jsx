@@ -146,13 +146,6 @@ const BeadJar = ({
 					)}
 				</AnimatePresence>
 			</div>
-
-			{/* Debug or additional info */}
-			<div className="debug-info">
-				Hovered: {isHovered ? "Yes" : "No"}
-				{isMultiBead &&
-					` | Bead: ${currentBeadIndex + 1}/${beadVariants.length}`}
-			</div>
 		</div>
 	);
 };
