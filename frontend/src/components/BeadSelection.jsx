@@ -1,4 +1,3 @@
-// BeadSelection.jsx
 import { useState, useEffect } from "react";
 import BeadJar from "./BeadJar";
 
@@ -71,7 +70,6 @@ const BeadSelection = ({ onBeadSelect }) => {
 		setBeadsToLoad(beadTypes);
 	}, []);
 
-	// We simply pass along the data from BeadJar to the parent
 	const handleBeadSelect = (beadData) => {
 		console.log("Bead selected:", beadData);
 		onBeadSelect(beadData);
@@ -79,10 +77,6 @@ const BeadSelection = ({ onBeadSelect }) => {
 
 	return (
 		<div className="container">
-			{/* 
-        1) Reduce the gutter from g-2 to g-1 or g-0 for tighter spacing
-        2) Change col-4 to col-3 or col-2 if you want them even closer
-      */}
 			<div className="row g-2 justify-content-center">
 				{beadsToLoad.map((bead) => (
 					<div key={bead.name} className="col-4">
