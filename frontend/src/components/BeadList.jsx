@@ -1,6 +1,6 @@
 import "../style/BeadList.css";
 
-const BeadList = ({ beads, onRemoveBead, isFull }) => {
+function BeadList({ beads, onRemoveBead, isFull }) {
 	const groups = [];
 	beads.forEach((bead, idx) => {
 		if (
@@ -56,6 +56,6 @@ const BeadList = ({ beads, onRemoveBead, isFull }) => {
 			</ul>
 		</div>
 	);
-};
+}
 
 export default BeadList;

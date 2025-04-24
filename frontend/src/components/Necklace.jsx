@@ -1,51 +1,86 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
-
 gsap.registerPlugin(MotionPathPlugin);
 
-const Necklace = ({ beads = [], length = 42 }) => {
+function Necklace({ beads = [], length = 42 }) {
 	const necklaceRef = useRef(null);
 	const beadContainerRef = useRef(null);
 	const prevBeadsRef = useRef([]);
 	const groupRef = useRef(null);
 
+	// Parameters
 	const beadPixelWidth = 15;
 	const capacity = Math.floor((length / 10) * 35);
-
-	// We define a gapFactor < 1 to reduce spacing
-	const gapFactor = 0.65; // adjust to 0.9, 0.7, etc. until it looks right
-
-	// Instead of capacity * beadPixelWidth, we multiply by gapFactor
-	// and use (capacity - 1) because the offset from 1→0 is split into (capacity-1) intervals
+	const gapFactor = 0.65;
 	const desiredPathLength = (capacity - 1) * beadPixelWidth * gapFactor;
 
-	// Scale the base path so its arc length ~ desiredPathLength
+	// 1) scale the SVG path
 	useEffect(() => {
-		if (groupRef.current) {
-			const pathEl = groupRef.current.querySelector("#necklacePath");
-			if (pathEl) {
-				const baseLength = pathEl.getTotalLength();
-				const scaleFactor = desiredPathLength / baseLength;
-				gsap.set(groupRef.current, {
-					scale: scaleFactor,
-					transformOrigin: "50% 50%",
-				});
-			}
-		}
+		if (!groupRef.current) return;
+		const pathEl = groupRef.current.querySelector("#necklacePath");
+		if (!pathEl) return;
+		const baseLen = pathEl.getTotalLength();
+		const scaleFactor = desiredPathLength / baseLen;
+		gsap.set(groupRef.current, {
+			scale: scaleFactor,
+			transformOrigin: "50% 50%",
+		});
 	}, [length, desiredPathLength]);
 
-	// Animate new beads
+	// 2) animate add & removal
 	useEffect(() => {
-		if (beads.length && beadContainerRef.current && necklaceRef.current) {
-			const newBead = beadContainerRef.current.lastElementChild;
-			if (newBead) {
-				const tl = gsap.timeline();
+		// — REMOVAL branch —
+		const container = beadContainerRef.current;
+		if (!container) return;
 
-				// 1) Drop from the drop path
-				tl.set(newBead, { opacity: 0, scale: 0 });
-				tl.to(newBead, {
-					duration: 0.5,
+		const oldBeads = prevBeadsRef.current;
+		const newBeads = beads;
+		const den = capacity > 1 ? capacity - 1 : 1;
+		const tl = gsap.timeline();
+
+		if (oldBeads.length > newBeads.length) {
+			// 1) identify removed bead
+			const removedIndex = oldBeads.findIndex(
+				(b) => !newBeads.some((n) => n.id === b.id)
+			);
+			// — slide every bead after the hole forward by exactly one slot —
+			newBeads.forEach((_, idx) => {
+				if (idx >= removedIndex) {
+					const el = container.children[idx];
+					const oldOff = 1 - idx / den;
+					const newOff = 1 - (idx - 1) / den;
+
+					tl.to(
+						el,
+						{
+							duration: 0.4,
+							ease: "power2.inOut",
+							motionPath: {
+								path: "#necklacePath",
+								align: "#necklacePath",
+								autoRotate: true,
+								alignOrigin: [0.5, 0.5],
+								start: oldOff,
+								end: newOff,
+							},
+						},
+						0
+					);
+				}
+			});
+		}
+
+		// — ADDITION branch —
+		else if (newBeads.length > oldBeads.length) {
+			// animate only the last bead
+			const lastIdx = newBeads.length - 1;
+			const el = container.children[lastIdx];
+			if (el) {
+				const startOff = 1 - lastIdx / den;
+				tl.set(el, { opacity: 0, scale: 0 });
+				tl.to(el, {
+					duration: 1,
 					ease: "power1.inOut",
 					opacity: 1,
 					scale: 1,
@@ -58,60 +93,23 @@ const Necklace = ({ beads = [], length = 42 }) => {
 						end: 1,
 					},
 				});
-
-				// 2) Slide along the necklace path
-				const i = beads.length - 1;
-				if (capacity > 1) {
-					let offsetFrac = 1 - i / (capacity - 1);
-					if (offsetFrac < 0) offsetFrac = 0;
-					if (offsetFrac > 1) offsetFrac = 1;
-
-					tl.to(newBead, {
-						duration: 2,
-						ease: "power1.inOut",
-						motionPath: {
-							path: "#necklacePath",
-							align: "#necklacePath",
-							autoRotate: true,
-							alignOrigin: [0.5, 0.5],
-							start: 0,
-							end: offsetFrac,
-						},
-					});
-				}
-			}
-		}
-
-		// Removal animation if needed
-		if (prevBeadsRef.current.length > beads.length) {
-			let removedIndex = -1;
-			for (let i = 0; i < prevBeadsRef.current.length; i++) {
-				if (!beads.find((b) => b.id === prevBeadsRef.current[i].id)) {
-					removedIndex = i;
-					break;
-				}
-			}
-			if (removedIndex !== -1 && beadContainerRef.current) {
-				const beadElements = beadContainerRef.current.children;
-				const removedEl = beadElements[removedIndex];
-				gsap.to(removedEl, {
+				// then slide it onto necklace
+				tl.to(el, {
 					duration: 1,
-					x: 0,
-					y: 50,
-					opacity: 0,
-					ease: "power2.inOut",
-					onComplete: () => {
-						for (let j = removedIndex; j < beadElements.length; j++) {
-							gsap.to(beadElements[j], {
-								duration: 0.5,
-								y: "+=20",
-								ease: "power2.inOut",
-							});
-						}
+					ease: "power1.inOut",
+					motionPath: {
+						path: "#necklacePath",
+						align: "#necklacePath",
+						autoRotate: true,
+						alignOrigin: [0.5, 0.5],
+						start: 0,
+						end: startOff,
 					},
 				});
 			}
 		}
+
+		// sync for next diff
 		prevBeadsRef.current = beads;
 	}, [beads, capacity]);
 
@@ -135,13 +133,13 @@ const Necklace = ({ beads = [], length = 42 }) => {
 				<g ref={groupRef}>
 					<path
 						id="dropPath"
-						d="M450,-350 L600,-25"
+						d="M800,-350 L800,-25"
 						fill="none"
 						stroke="none"
 					/>
 					<path
 						id="necklacePath"
-						d="M600,-25 C1000,600 0,600 400,-25"
+						d="M800,-25 C800,800 100,800 100,-25"
 						stroke="rgb(84,84,84)"
 						strokeWidth="2"
 						fill="none"
@@ -154,9 +152,10 @@ const Necklace = ({ beads = [], length = 42 }) => {
 				className="position-absolute top-0 start-0"
 				style={{ width: "100%", height: "100%" }}
 			>
-				{beads.map((bead, index) => (
+				{beads.map((bead, idx) => (
 					<img
-						key={index}
+						key={bead.id}
+						data-id={bead.id}
 						src={bead.image}
 						alt={bead.name}
 						className="position-absolute"
@@ -169,6 +168,6 @@ const Necklace = ({ beads = [], length = 42 }) => {
 			</div>
 		</div>
 	);
-};
+}
 
 export default Necklace;

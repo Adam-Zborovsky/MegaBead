@@ -71,7 +71,6 @@ const BeadSelection = ({ onBeadSelect }) => {
 	}, []);
 
 	const handleBeadSelect = (beadData) => {
-		console.log("Bead selected:", beadData);
 		onBeadSelect(beadData);
 	};
 
