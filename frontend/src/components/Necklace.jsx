@@ -9,13 +9,13 @@ function Necklace({ beads = [], length = 42 }) {
 	const prevBeadsRef = useRef([]);
 	const groupRef = useRef(null);
 
-	// Parameters
+	// 1️⃣ Parameters
 	const beadPixelWidth = 15;
 	const capacity = Math.floor((length / 10) * 35);
 	const gapFactor = 0.65;
 	const desiredPathLength = (capacity - 1) * beadPixelWidth * gapFactor;
 
-	// 1) scale the SVG path
+	// 2️⃣ Scale the SVG path to match desired arc length
 	useEffect(() => {
 		if (!groupRef.current) return;
 		const pathEl = groupRef.current.querySelector("#necklacePath");
@@ -28,9 +28,8 @@ function Necklace({ beads = [], length = 42 }) {
 		});
 	}, [length, desiredPathLength]);
 
-	// 2) animate add & removal
+	// 3️⃣ Removal snapping + Add drop-in
 	useEffect(() => {
-		// — REMOVAL branch —
 		const container = beadContainerRef.current;
 		if (!container) return;
 
@@ -39,48 +38,52 @@ function Necklace({ beads = [], length = 42 }) {
 		const den = capacity > 1 ? capacity - 1 : 1;
 		const tl = gsap.timeline();
 
+		// — REMOVAL: fade removed bead, then snap all remaining to exact slots —
 		if (oldBeads.length > newBeads.length) {
-			// 1) identify removed bead
+			// a) find & fade out the removed bead
 			const removedIndex = oldBeads.findIndex(
 				(b) => !newBeads.some((n) => n.id === b.id)
 			);
-			// — slide every bead after the hole forward by exactly one slot —
-			newBeads.forEach((_, idx) => {
-				if (idx >= removedIndex) {
-					const el = container.children[idx];
-					const oldOff = 1 - idx / den;
-					const newOff = 1 - (idx - 1) / den;
+			const removedId = oldBeads[removedIndex].id;
+			const removedEl = container.querySelector(`[data-id="${removedId}"]`);
+			if (removedEl) {
+				tl.to(removedEl, {
+					duration: 0.4,
+					ease: "power1.inOut",
+					opacity: 0,
+					scale: 0,
+				});
+			}
 
-					tl.to(
-						el,
-						{
-							duration: 0.4,
-							ease: "power2.inOut",
-							motionPath: {
-								path: "#necklacePath",
-								align: "#necklacePath",
-								autoRotate: true,
-								alignOrigin: [0.5, 0.5],
-								start: oldOff,
-								end: newOff,
-							},
-						},
-						0
-					);
-				}
+			// b) snap every bead into its capacity-based slot
+			newBeads.forEach((_, idx) => {
+				const el = container.children[idx];
+				const offset = 1 - idx / den;
+				gsap.set(el, {
+					motionPath: {
+						path: "#necklacePath",
+						align: "#necklacePath",
+						autoRotate: true,
+						alignOrigin: [0.5, 0.5],
+						start: 0,
+						end: offset,
+					},
+				});
 			});
 		}
 
-		// — ADDITION branch —
+		// — ADDITION: drop + slide new bead into its capacity-based slot —
 		else if (newBeads.length > oldBeads.length) {
-			// animate only the last bead
-			const lastIdx = newBeads.length - 1;
-			const el = container.children[lastIdx];
+			const idx = newBeads.length - 1;
+			const el = container.children[idx];
 			if (el) {
-				const startOff = 1 - lastIdx / den;
+				const targetOffset = 1 - idx / den;
+
 				tl.set(el, { opacity: 0, scale: 0 });
+
+				// drop from above
 				tl.to(el, {
-					duration: 1,
+					duration: 0.8,
 					ease: "power1.inOut",
 					opacity: 1,
 					scale: 1,
@@ -93,9 +96,10 @@ function Necklace({ beads = [], length = 42 }) {
 						end: 1,
 					},
 				});
-				// then slide it onto necklace
+
+				// slide onto the necklace
 				tl.to(el, {
-					duration: 1,
+					duration: 0.8,
 					ease: "power1.inOut",
 					motionPath: {
 						path: "#necklacePath",
@@ -103,16 +107,17 @@ function Necklace({ beads = [], length = 42 }) {
 						autoRotate: true,
 						alignOrigin: [0.5, 0.5],
 						start: 0,
-						end: startOff,
+						end: targetOffset,
 					},
 				});
 			}
 		}
 
-		// sync for next diff
+		// 4️⃣ sync for next diff
 		prevBeadsRef.current = beads;
 	}, [beads, capacity]);
 
+	// 5️⃣ Render
 	return (
 		<div
 			ref={necklaceRef}
@@ -152,7 +157,7 @@ function Necklace({ beads = [], length = 42 }) {
 				className="position-absolute top-0 start-0"
 				style={{ width: "100%", height: "100%" }}
 			>
-				{beads.map((bead, idx) => (
+				{beads.map((bead) => (
 					<img
 						key={bead.id}
 						data-id={bead.id}
