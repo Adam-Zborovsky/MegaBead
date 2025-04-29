@@ -19,7 +19,6 @@ function Builder() {
 		}
 	};
 
-	// Function to remove a bead at a given index
 	const removeBeadFromNecklace = (removeIndex) => {
 		setNecklaceBeads((prev) => {
 			const newArr = [...prev];
@@ -29,18 +28,28 @@ function Builder() {
 		setIsFull(false);
 	};
 
+	const handleaddToCart = () => {};
+
 	useEffect(() => {
 		setNecklaceBeads([]);
 	}, [necklaceLength]);
 
 	return (
-		<div className="row g-0" style={{ height: "100vh" }}>
+		<div className="row g-0 p-0" style={{ height: "100vh" }}>
 			{/* Left: Bead List */}
 			<div className="col-md-3 p-3" style={{ overflowY: "auto" }}>
 				<BeadList
 					beads={necklaceBeads}
 					onRemoveBead={removeBeadFromNecklace}
 					isFull={isFull}
+					onReset={() => {
+						setNecklaceBeads([]);
+						setIsFull(false);
+					}}
+					onAddToCart={() => {
+						setNecklaceBeads([]);
+						setIsFull(false);
+					}}
 				/>
 			</div>
 

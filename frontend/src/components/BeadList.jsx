@@ -16,7 +16,7 @@ function BeadList({ beads, onRemoveBead, isFull }) {
 	return (
 		<div
 			className="card shadow-sm"
-			style={{ width: "50%", margin: "10rem auto" }}
+			style={{ width: "50%", margin: "5rem auto" }}
 		>
 			<div className="card-header">
 				<h5 className="card-title mb-0">Bead List</h5>
@@ -47,12 +47,12 @@ function BeadList({ beads, onRemoveBead, isFull }) {
 						</span>
 					</li>
 				))}
-				{isFull && (
-					<div className="card-footer d-flex justify-content-around">
+				<div className="card-footer d-flex justify-content-around">
+					{isFull && (
 						<button className="btn btn-sm btn-primary">Add To Cart</button>
-						<button className="btn btn-sm btn-danger">Reset</button>
-					</div>
-				)}
+					)}
+					<button className="btn btn-sm btn-danger">Reset</button>
+				</div>
 			</ul>
 		</div>
 	);
