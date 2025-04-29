@@ -39,6 +39,7 @@ h6,
 }
 
 /* Buttons */
+<<<<<<< HEAD
 .btn-outline-primary {
 	color: var(--bs-primary) !important;
 	border-color: var(--bs-primary) !important;
@@ -47,6 +48,8 @@ h6,
 	background-color: var(--bs-primary) !important;
 	color: var(--bs-primary-text) !important;
 }
+=======
+>>>>>>> 6b0a13c2f13a4e82d05cacf06a8cf669b8e7ca3e
 .btn-primary {
 	background-color: var(--bs-primary) !important;
 	border-color: var(--bs-primary) !important;
@@ -62,6 +65,7 @@ h6,
 	color: var(--bs-secondary-text) !important;
 }
 
+<<<<<<< HEAD
 .text-primary {
 	color: var(--bs-primary) !important;
 }
@@ -69,6 +73,9 @@ h6,
 	color: var(--bs-secondary-text) !important;
 }
 
+=======
+/* Cards (“small window” look) */
+>>>>>>> 6b0a13c2f13a4e82d05cacf06a8cf669b8e7ca3e
 .card {
 	background-color: var(--bs-light) !important;
 	border: none;
@@ -79,6 +86,10 @@ h6,
 	color: var(--bs-primary) !important;
 }
 
+<<<<<<< HEAD
+=======
+/* Forms */
+>>>>>>> 6b0a13c2f13a4e82d05cacf06a8cf669b8e7ca3e
 .form-control,
 .form-select {
 	background-color: var(--bs-light) !important;
@@ -87,6 +98,7 @@ h6,
 }
 .form-control::placeholder {
 	color: rgba(78, 52, 46, 0.6) !important;
+<<<<<<< HEAD
 }
 .window {
 	background-color: var(--bs-secondary);
@@ -95,4 +107,6 @@ h6,
 	padding: 1.5rem;
 	box-shadow: 0 2px 4px rgba(var(--bs-primary-rgb), 0.1);
 	margin-bottom: 2rem;
+=======
+>>>>>>> 6b0a13c2f13a4e82d05cacf06a8cf669b8e7ca3e
 }

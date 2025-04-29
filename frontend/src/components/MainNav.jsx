@@ -26,9 +26,12 @@ export default function MainNav() {
 						<Nav.Link as={Link} to="/categories">
 							Categories
 						</Nav.Link>
+<<<<<<< HEAD
 						<Nav.Link as={Link} to="/builder">
 							Builder
 						</Nav.Link>
+=======
+>>>>>>> 6b0a13c2f13a4e82d05cacf06a8cf669b8e7ca3e
 					</Nav>
 
 					<Form className="d-flex align-items-center me-3">
