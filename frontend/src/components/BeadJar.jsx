@@ -1,7 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import lidImage from "../images/Lid.png";
-import floatingLid from "../images/Floating_Lid.png";
 import "../style/BeadJar.css";
 
 const BeadJar = ({
@@ -112,7 +110,7 @@ const BeadJar = ({
 					{!isHovered ? (
 						<motion.img
 							key="closed-lid"
-							src={lidImage}
+							src={"/images/Lid.png"}
 							alt="Jar lid"
 							className="lid-image"
 							initial={{
@@ -133,7 +131,7 @@ const BeadJar = ({
 					) : (
 						<motion.img
 							key="floating-lid"
-							src={floatingLid}
+							src={"/images/Floating_Lid.png"}
 							alt="Floating jar lid"
 							className="floating-lid-image"
 							initial={{ opacity: 0 }}

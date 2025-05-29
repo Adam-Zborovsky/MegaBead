@@ -17,10 +17,9 @@ connectToDB()
 		app.use(express.urlencoded({ extended: true }));
 		app.use(loggerMiddleware());
 
-		app.use(express.static(path.join(__dirname, "public")));
 		app.use(
-			"/product-images",
-			express.static(path.join(__dirname, "public/product-images"))
+			"/images",
+			express.static(path.join(__dirname, "products/product-images"))
 		);
 
 		app.use("/", router);

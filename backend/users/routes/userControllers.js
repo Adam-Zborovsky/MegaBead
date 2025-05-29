@@ -118,10 +118,13 @@ router.put("/:id", auth, async (req, res) => {
 		const updateData = {};
 		if (req.body.name) updateData.name = req.body.name;
 		if (req.body.email) updateData.email = req.body.email;
-		if (req.body.dates)
-			updateData.dates = req.body.dates.split(",").map((d) => d.trim());
+		if (req.body.password) updateData.password = req.body.password;
+		if (req.body.isAdmin !== undefined) updateData.isAdmin = req.body.isAdmin;
 		if (req.body.paymentOptions)
 			updateData.paymentOptions = parsePaymentOptions(req.body.paymentOptions);
+		if (req.body.shippingOptions)
+			updateData.shippingOptions = req.body.shippingOptions;
+		if (req.body.cart) updateData.cart = req.body.cart;
 
 		const updatedUser = await updateUser(req.params.id, updateData);
 		res.status(200).json(updatedUser);

@@ -2,17 +2,33 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { updateUser, deleteUser } from "../services/userServices";
 import { toast } from "react-toastify";
+import AddShippingWindow from "../components/AddShippingWindow";
+import AddPaymentWindow from "../components/AddPaymentWindow";
+import { useNavigate } from "react-router-dom";
+import { FaPlus } from "react-icons/fa";
 
 const Profile = () => {
 	const { user, token, logout } = useContext(AuthContext);
+
 	const [formData, setFormData] = useState({
-		name: `${user.name.first} ${user.name.last}`,
-		email: user.email,
+		name: `${user.name?.first || ""} ${user.name?.last || ""}`,
+		email: user.email || "",
+		shippingOptions: user.shippingOptions || [],
+		paymentOptions: user.paymentOptions || [],
 	});
+
+	const [showShippingWindow, setShowShippingWindow] = useState(false);
+	const [showPaymentWindow, setShowPaymentWindow] = useState(false);
+	const navigate = useNavigate();
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setFormData({ ...formData, [name]: value });
+	};
+
+	const handleLogout = () => {
+		logout();
+		navigate("/");
 	};
 
 	const handleUpdate = async () => {
@@ -23,6 +39,8 @@ const Profile = () => {
 					last: formData.name.split(" ")[1],
 				},
 				email: formData.email,
+				shippingOptions: formData.shippingOptions,
+				paymentOptions: formData.paymentOptions,
 			};
 			await updateUser(updatedUser, token);
 			toast.success("Profile updated successfully!");
@@ -41,6 +59,13 @@ const Profile = () => {
 		}
 	};
 
+	if (!user) {
+		return (
+			<div className="text-center mt-5">
+				Please log in to access your profile.
+			</div>
+		);
+	}
 	return (
 		<div className="container d-flex justify-content-center align-items-center my-4">
 			<div className="card shadow-lg p-4" style={{ width: "400px" }}>
@@ -66,6 +91,40 @@ const Profile = () => {
 							onChange={handleChange}
 						/>
 					</div>
+					<div className="mb-3">
+						<label className="form-label">Shipping Options</label>
+						<select className="form-select mb-2">
+							<option value="">Select Address</option>
+							{formData.shippingOptions.map((option, index) => (
+								<option key={index} value={option.addressLine1}>
+									{option.addressLine1}
+								</option>
+							))}
+						</select>
+						<button
+							className="btn btn-link p-0"
+							onClick={() => setShowShippingWindow(true)}
+						>
+							<FaPlus />
+						</button>
+					</div>
+					<div className="mb-3">
+						<label className="form-label">Payment Options</label>
+						<select className="form-select mb-2">
+							<option value="">Select Card</option>
+							{formData.paymentOptions.map((option, index) => (
+								<option key={index} value={option.cardHolderName}>
+									{option.cardHolderName}
+								</option>
+							))}
+						</select>
+						<button
+							className="btn btn-link p-0"
+							onClick={() => setShowPaymentWindow(true)}
+						>
+							<FaPlus />
+						</button>
+					</div>
 					<div className="d-flex justify-content-between">
 						<button
 							type="button"
@@ -81,9 +140,22 @@ const Profile = () => {
 						>
 							Delete
 						</button>
+						<button
+							type="button"
+							className="btn btn-secondary"
+							onClick={handleLogout}
+						>
+							Log Out
+						</button>
 					</div>
 				</form>
 			</div>
+			{showShippingWindow && (
+				<AddShippingWindow onClose={() => setShowShippingWindow(false)} />
+			)}
+			{showPaymentWindow && (
+				<AddPaymentWindow onClose={() => setShowPaymentWindow(false)} />
+			)}
 		</div>
 	);
 };

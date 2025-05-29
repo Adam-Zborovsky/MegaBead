@@ -19,10 +19,7 @@ export function getProductById(id) {
 	let config = {
 		method: "get",
 		maxBodyLength: Infinity,
-		url: apiURL + "/" + id,
-		headers: {
-			"Content-Type": "application/json",
-		},
+		url: apiURL + id,
 	};
 
 	return axios.request(config);
@@ -56,7 +53,7 @@ export function updateProduct(id, product, token) {
 	let config = {
 		method: "put",
 		maxBodyLength: Infinity,
-		url: apiURL + "/" + id,
+		url: apiURL + id,
 		headers: {
 			"Content-Type": "multipart/form-data",
 			"x-auth-token": token,
@@ -71,7 +68,7 @@ export function deleteProduct(id, token) {
 	let config = {
 		method: "delete",
 		maxBodyLength: Infinity,
-		url: apiURL + "/" + id,
+		url: apiURL + id,
 		headers: {
 			"Content-Type": "application/json",
 			"x-auth-token": token,

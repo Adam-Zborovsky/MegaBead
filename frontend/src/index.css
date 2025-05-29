@@ -76,9 +76,11 @@ h6,
 
 .card {
 	background-color: var(--bs-light) !important;
-	border: none;
-	border-radius: 0.5rem;
-	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+	border: 2px solid var(--bs-primary);
+	border-radius: 0.75rem;
+	padding: 1.5rem;
+	box-shadow: 0 2px 4px rgba(var(--bs-primary-rgb), 0.1);
+	margin-bottom: 2rem;
 }
 .card .card-title {
 	color: var(--bs-primary) !important;

@@ -1,9 +1,11 @@
 import { useState, useContext } from "react";
 import { registerUser, loginUser } from "../services/userServices";
 import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
 	const { login } = useContext(AuthContext);
+	const navigate = useNavigate();
 
 	const [formData, setFormData] = useState({
 		name: {
@@ -34,6 +36,7 @@ const Register = () => {
 					.then((loginResponse) => {
 						if (loginResponse.data.token) {
 							login(loginResponse.data.token);
+							navigate("/");
 						}
 					})
 					.catch((err) => {

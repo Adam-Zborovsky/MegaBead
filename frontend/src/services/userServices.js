@@ -54,7 +54,6 @@ export function getUserById(id, token) {
 			"x-auth-token": token,
 		},
 	};
-	console.log(config);
 	return axios.request(config);
 }
 

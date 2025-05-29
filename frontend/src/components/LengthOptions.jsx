@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { NecklaceIcon } from "../customIcons/NecklaceIcon";
+import { BraceletIcon } from "../customIcons/BraceletIcon";
 
 function LengthOptions({ length, onLengthChange }) {
 	const [selectedType, setSelectedType] = useState("necklace");
@@ -75,7 +77,7 @@ function LengthOptions({ length, onLengthChange }) {
 						onClick={() => setSelectedType(type)}
 						style={{ background: "transparent", border: "none", zIndex: 1 }}
 					>
-						{type.charAt(0).toUpperCase() + type.slice(1)}
+						{type === "necklace" ? <NecklaceIcon /> : <BraceletIcon />}
 					</button>
 				))}
 			</div>

@@ -45,6 +45,30 @@ const paymentOptionSchema = new mongoose.Schema(
 	{ _id: false }
 );
 
+const shippingOptionSchema = new mongoose.Schema(
+	{
+		addressLine1: { type: String, required: true },
+		addressLine2: { type: String, required: false },
+		city: { type: String, required: true },
+		state: { type: String, required: true },
+		postalCode: { type: String, required: true },
+		country: { type: String, required: true },
+	},
+	{ _id: false }
+);
+
+const cartItemSchema = new mongoose.Schema(
+	{
+		productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+		customProduct: {
+			type: Object,
+			default: null,
+		},
+		quantity: { type: Number, default: 1 },
+	},
+	{ _id: false }
+);
+
 const userSchema = new mongoose.Schema(
 	{
 		name: {
@@ -58,6 +82,15 @@ const userSchema = new mongoose.Schema(
 		paymentOptions: {
 			type: [paymentOptionSchema],
 			required: false,
+			default: [],
+		},
+		shippingOptions: {
+			type: [shippingOptionSchema],
+			required: false,
+			default: [],
+		},
+		cart: {
+			type: [cartItemSchema],
 			default: [],
 		},
 	},

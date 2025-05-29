@@ -80,11 +80,11 @@ const BeadSelection = ({ onBeadSelect }) => {
 				{beadsToLoad.map((bead) => (
 					<div key={bead.name} className="col-4">
 						<BeadJar
-							jarImage={`../images/${bead.name}/jar.png`}
+							jarImage={`/images/${bead.name}/jar.png`}
 							beadImage={
 								bead.multiBeads
-									? `../images/${bead.name}/${bead.variants[0]}_bead.png`
-									: `../images/${bead.name}/bead.png`
+									? `/images/${bead.name}/${bead.variants[0]}_bead.png`
+									: `/images/${bead.name}/bead.png`
 							}
 							beadColor={bead.name}
 							isMultiBead={bead.multiBeads}

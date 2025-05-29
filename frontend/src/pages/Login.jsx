@@ -1,10 +1,12 @@
 import { useState, useContext } from "react";
 import { loginUser } from "../services/userServices";
 import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
 	const [formData, setFormData] = useState({ email: "", password: "" });
 	const { login } = useContext(AuthContext);
+	const navigate = useNavigate();
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -16,6 +18,7 @@ const Login = () => {
 		loginUser(formData.email, formData.password)
 			.then((res) => {
 				login(res.data.token);
+				navigate("/");
 			})
 			.catch((error) => {
 				console.error("Login failed:", error);

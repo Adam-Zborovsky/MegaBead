@@ -9,13 +9,13 @@ function Necklace({ beads = [], length = 42 }) {
 	const prevBeadsRef = useRef([]);
 	const groupRef = useRef(null);
 
-	// 1️⃣ Parameters
+	// Parameters
 	const beadPixelWidth = 15;
 	const capacity = Math.floor((length / 10) * 35);
 	const gapFactor = 0.65;
 	const desiredPathLength = (capacity - 1) * beadPixelWidth * gapFactor;
 
-	// 2️⃣ Scale the SVG path to match desired arc length
+	//Scale the SVG path to match desired arc length
 	useEffect(() => {
 		if (!groupRef.current) return;
 		const pathEl = groupRef.current.querySelector("#necklacePath");
@@ -28,7 +28,7 @@ function Necklace({ beads = [], length = 42 }) {
 		});
 	}, [length, desiredPathLength]);
 
-	// 3️⃣ Removal snapping + Add drop-in
+	//  Removal snapping + Add drop-in
 	useEffect(() => {
 		const container = beadContainerRef.current;
 		if (!container) return;
@@ -113,15 +113,15 @@ function Necklace({ beads = [], length = 42 }) {
 			}
 		}
 
-		// 4️⃣ sync for next diff
+		//  sync for next diff
 		prevBeadsRef.current = beads;
 	}, [beads, capacity]);
 
-	// 5️⃣ Render
+	//  Render
 	return (
 		<div
 			ref={necklaceRef}
-			className="position-relative"
+			className="Necklace position-relative"
 			style={{
 				width: "80%",
 				height: "80vh",

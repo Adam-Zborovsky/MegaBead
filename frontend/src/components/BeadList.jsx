@@ -1,6 +1,11 @@
+import { toast } from "react-toastify";
 import "../style/BeadList.css";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
-function BeadList({ beads, onRemoveBead, isFull }) {
+function BeadList({ beads, onRemoveBead, handleReset, isFull, onAddToCart }) {
+	const { user } = useContext(AuthContext);
+
 	const groups = [];
 	beads.forEach((bead, idx) => {
 		if (
@@ -13,8 +18,17 @@ function BeadList({ beads, onRemoveBead, isFull }) {
 		}
 	});
 
+	const handleAddToCart = () => {
+		if (user) {
+			onAddToCart();
+			toast.success("Added to cart successfully!");
+		} else {
+			toast.error("Please log in to add items to the cart.");
+		}
+	};
+
 	return (
-		<div className="card shadow-sm" style={{ margin: "2rem auto" }}>
+		<div className="card shadow-sm" style={{ border: "none", padding: "5px" }}>
 			<div className="card-header">
 				<h5 className="card-title mb-0">Bead List</h5>
 			</div>
@@ -46,9 +60,16 @@ function BeadList({ beads, onRemoveBead, isFull }) {
 				))}
 				<div className="card-footer d-flex justify-content-around">
 					{isFull && (
-						<button className="btn btn-sm btn-primary">Add To Cart</button>
+						<button
+							className="btn btn-sm btn-primary"
+							onClick={handleAddToCart}
+						>
+							{user ? "Add To Cart" : "Log in to Add to Cart"}
+						</button>
 					)}
-					<button className="btn btn-sm btn-danger">Reset</button>
+					<button className="btn btn-sm btn-danger" onClick={handleReset}>
+						Reset
+					</button>
 				</div>
 			</ul>
 		</div>

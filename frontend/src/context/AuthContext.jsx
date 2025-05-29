@@ -14,7 +14,6 @@ const AuthProvider = ({ children }) => {
 			if (token) {
 				try {
 					const userData = await getUserById(jwtDecode(token)._id, token);
-					console.log("User data fetched:", userData);
 					setUser(userData.data);
 					setToken(token);
 				} catch (error) {
