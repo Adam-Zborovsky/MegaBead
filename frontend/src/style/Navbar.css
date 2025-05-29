@@ -1,7 +1,11 @@
 .custom-navbar {
 	background-color: var(--bs-primary) !important;
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	margin: 5px 20vw 0 20vw;
 	padding: 0.5rem 1rem;
+	border-radius: 50rem !important;
+	border: 1px solid rgba(0, 0, 0, 0.1) !important;
+	color: var(--bs-body-color) !important;
 }
 
 .custom-navbar .navbar-brand {

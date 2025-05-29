@@ -1,11 +1,14 @@
 import { Link } from "react-router-dom";
 import "../style/Navbar.css";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 function NavBar() {
+	const { user } = useContext(AuthContext);
 	return (
 		<nav className="navbar custom-navbar navbar-expand-lg bg-primary">
 			<div className="container">
 				<Link className="navbar-brand text-white" to="/">
-					MyStore
+					Mega Bead
 				</Link>
 				<button
 					className="navbar-toggler"
@@ -26,6 +29,11 @@ function NavBar() {
 						<Link className="nav-link" to="/builder">
 							Builder
 						</Link>
+						{user && user.isAdmin && (
+							<Link className="nav-link" to="/create_product">
+								Create Product
+							</Link>
+						)}
 					</div>
 					<div className="d-flex space-between">
 						<form className="d-flex align-items-center me-3">
@@ -41,19 +49,32 @@ function NavBar() {
 						</form>
 
 						<ul className="navbar-nav ms-auto">
-							<li className="nav-item">
-								<Link
-									className="nav-link btn-pill btn-login text-white"
-									to="/login"
-								>
-									Login
-								</Link>
-							</li>
-							<li className="nav-item">
-								<Link className="nav-link btn-pill text-white" to="/register">
-									Register
-								</Link>
-							</li>
+							{user ? (
+								<li className="nav-item">
+									<Link className="nav-link btn-pill text-white" to="/profile">
+										Welcome, {user.name.first}
+									</Link>
+								</li>
+							) : (
+								<>
+									<li className="nav-item">
+										<Link
+											className="nav-link btn-pill btn-login text-white"
+											to="/login"
+										>
+											Login
+										</Link>
+									</li>
+									<li className="nav-item">
+										<Link
+											className="nav-link btn-pill text-white"
+											to="/register"
+										>
+											Register
+										</Link>
+									</li>
+								</>
+							)}
 						</ul>
 					</div>
 				</div>

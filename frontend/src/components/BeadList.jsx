@@ -14,10 +14,7 @@ function BeadList({ beads, onRemoveBead, isFull }) {
 	});
 
 	return (
-		<div
-			className="card shadow-sm"
-			style={{ width: "50%", margin: "5rem auto" }}
-		>
+		<div className="card shadow-sm" style={{ margin: "2rem auto" }}>
 			<div className="card-header">
 				<h5 className="card-title mb-0">Bead List</h5>
 			</div>

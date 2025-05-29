@@ -127,6 +127,7 @@ function Necklace({ beads = [], length = 42 }) {
 				height: "80vh",
 				minHeight: "400px",
 				overflow: "visible",
+				margin: "0 auto",
 			}}
 		>
 			<svg
@@ -138,13 +139,14 @@ function Necklace({ beads = [], length = 42 }) {
 				<g ref={groupRef}>
 					<path
 						id="dropPath"
-						d="M800,-350 L800,-25"
+						d="M800,-350 L850,-25"
 						fill="none"
 						stroke="none"
 					/>
 					<path
 						id="necklacePath"
-						d="M800,-25 C800,800 100,800 100,-25"
+						d="M850,-25 C850,850 150, 850 150,-25"
+						//M500,300 C800,800 100,800 400,300
 						stroke="rgb(84,84,84)"
 						strokeWidth="2"
 						fill="none"

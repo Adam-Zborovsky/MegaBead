@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import BeadSelection from "../components/BeadSelection";
 import Necklace from "../components/Necklace";
 import BeadList from "../components/BeadList";
-import NecklaceLengthOptions from "../components/NecklaceLengthOptions";
+import LengthOptions from "../components/LengthOptions";
 
 function Builder() {
 	const [necklaceBeads, setNecklaceBeads] = useState([]);
@@ -35,9 +35,9 @@ function Builder() {
 	}, [necklaceLength]);
 
 	return (
-		<div className="row g-0 p-0" style={{ height: "100vh" }}>
+		<div className="d-flex justify-content-center" style={{ height: "100vh" }}>
 			{/* Left: Bead List */}
-			<div className="col-md-3 p-3" style={{ overflowY: "auto" }}>
+			<div style={{ width: "400px" }}>
 				<BeadList
 					beads={necklaceBeads}
 					onRemoveBead={removeBeadFromNecklace}
@@ -54,16 +54,16 @@ function Builder() {
 			</div>
 
 			{/* Center: Necklace & length card */}
-			<div className="col-md-7 d-flex flex-column justify-content-start align-items-center">
+			<div className=" d-flex flex-column justify-content-start align-items-center">
 				<Necklace beads={necklaceBeads} length={necklaceLength} />
-				<NecklaceLengthOptions
+				<LengthOptions
 					length={necklaceLength}
 					onLengthChange={setNecklaceLength}
 				/>
 			</div>
 
 			{/* Right: Bead Selection */}
-			<div className="col-md-2" style={{ overflowY: "auto", height: "100vh" }}>
+			<div className="" style={{ overflowY: "auto", width: "400px" }}>
 				<BeadSelection onBeadSelect={addBeadToNecklace} />
 			</div>
 		</div>
