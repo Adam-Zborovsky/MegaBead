@@ -68,7 +68,6 @@ const BeadJar = ({
 	const handleClick = () => {
 		let chosenImage;
 		if (isMultiBead && beadVariants && beadVariants.length > 0) {
-			// Choose a random index from the beadVariants array
 			const randomIndex = Math.floor(Math.random() * beadVariants.length);
 			chosenImage = beadVariants[randomIndex];
 		} else {

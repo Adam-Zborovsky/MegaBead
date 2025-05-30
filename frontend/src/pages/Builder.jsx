@@ -31,7 +31,6 @@ function Builder() {
 	};
 
 	const handleAddToCart = async () => {
-		// Generate product description
 		const beadCounts = necklaceBeads.reduce((acc, bead) => {
 			acc[bead.name] = (acc[bead.name] || 0) + 1;
 			return acc;

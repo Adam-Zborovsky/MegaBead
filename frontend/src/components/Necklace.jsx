@@ -9,7 +9,6 @@ function Necklace({ beads = [], length = 42 }) {
 	const prevBeadsRef = useRef([]);
 	const groupRef = useRef(null);
 
-	// Parameters
 	const beadPixelWidth = 15;
 	const capacity = Math.floor((length / 10) * 35);
 	const gapFactor = 0.65;

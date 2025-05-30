@@ -49,7 +49,6 @@ const Cart = () => {
 
 	const handleCheckout = async () => {
 		try {
-			// Filter out temporary custom items
 			const updatedCart = cart.filter(
 				(item) => !item.customProduct?.isTemporary
 			);

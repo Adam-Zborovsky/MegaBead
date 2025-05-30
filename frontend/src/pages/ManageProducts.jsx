@@ -22,7 +22,7 @@ const ManageProducts = () => {
 		console.log("Deleting product with ID:", productId);
 		deleteProduct(productId, token)
 			.then(() => {
-				setProducts(products.filter((product) => product.id !== productId));
+				setProducts(products.filter((product) => product._id !== productId));
 				toast.success("Product deleted successfully");
 				window.location.reload();
 			})

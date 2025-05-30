@@ -7,7 +7,6 @@ function LengthOptions({ length, onLengthChange }) {
 	const [selectedOption, setSelectedOption] = useState("42");
 	const [customValue, setCustomValue] = useState("");
 
-	// Sync incoming `length` and reset when type changes
 	useEffect(() => {
 		const num = parseFloat(length);
 		const necklaceOpts = [39, 42, 45];
@@ -57,7 +56,6 @@ function LengthOptions({ length, onLengthChange }) {
 			className="card shadow-sm p-3 w-50 "
 			style={{ maxWidth: "400px", marginBottom: "1rem" }}
 		>
-			{/* single sliding pill toggle */}
 			<div className="d-flex position-relative border rounded-pill overflow-hidden mb-3">
 				<span
 					className="position-absolute top-0 bottom-0 bg-primary rounded-pill"
@@ -82,7 +80,6 @@ function LengthOptions({ length, onLengthChange }) {
 				))}
 			</div>
 
-			{/* Size options */}
 			<div className="row g-2 mb-3">
 				{options.map((opt) => (
 					<div className="col-6 col-md-3" key={opt}>
@@ -106,7 +103,6 @@ function LengthOptions({ length, onLengthChange }) {
 					</div>
 				))}
 
-				{/* Always include “Custom” */}
 				<div className="col-6 col-md-3">
 					<label
 						className={`btn w-100 ${
@@ -128,7 +124,6 @@ function LengthOptions({ length, onLengthChange }) {
 				</div>
 			</div>
 
-			{/* Custom input */}
 			{selectedOption === "custom" && (
 				<div className="mb-3">
 					<label className="form-label">

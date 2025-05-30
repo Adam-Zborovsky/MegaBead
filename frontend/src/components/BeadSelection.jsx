@@ -5,8 +5,6 @@ const BeadSelection = ({ onBeadSelect }) => {
 	const [beadsToLoad, setBeadsToLoad] = useState([]);
 
 	useEffect(() => {
-		// This would normally be an API call or dynamic import
-		// For now, we'll hardcode the folder structure we discovered
 		const beadTypes = [
 			{ name: "amber", multiBeads: false },
 			{ name: "amethyst", multiBeads: false },

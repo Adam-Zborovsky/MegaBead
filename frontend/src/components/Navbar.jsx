@@ -21,7 +21,6 @@ function NavBar() {
 					Mega Bead
 				</Link>
 
-				{/* Desktop Container */}
 				<div className="desktop-nav d-flex align-items-center">
 					<Link className="nav-link text-white" to="/products">
 						Shop
@@ -56,7 +55,6 @@ function NavBar() {
 					)}
 				</div>
 
-				{/* Mobile Container */}
 				<div className="mobile-nav d-flex align-items-center">
 					<Link className="nav-link text-white" to="/">
 						<FaHome />

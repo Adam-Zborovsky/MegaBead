@@ -46,8 +46,6 @@ function BeadList({ beads, onRemoveBead, handleReset, isFull, onAddToCart }) {
 								className="btn btn-sm btn-danger remove-btn"
 								onClick={(e) => {
 									e.stopPropagation();
-									// Remove the last bead from this group:
-									// Its index = startIndex + count - 1
 									const removeIndex = group.startIndex + group.count - 1;
 									onRemoveBead(removeIndex);
 								}}
