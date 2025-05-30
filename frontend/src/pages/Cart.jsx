@@ -1,18 +1,19 @@
 import { useContext, useState } from "react";
 import { CartContext } from "../context/CartContext";
 import { AuthContext } from "../context/AuthContext";
-import { updateUser } from "../services/userServices";
+import { updateUser } from "../services/userService";
 import { toast } from "react-toastify";
-import AddShippingWindow from "../components/AddShippingWindow";
-import AddPaymentWindow from "../components/AddPaymentWindow";
+import AddShippingModal from "../components/AddShippingModal";
+import AddPaymentWindow from "../components/AddPaymentModal";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
 	const { cart, removeItemFromCart } = useContext(CartContext);
 	const { user, token } = useContext(AuthContext);
 	const [shippingOption, setShippingOption] = useState("");
 	const [paymentOption, setPaymentOption] = useState("");
-	const [showShippingWindow, setShowShippingWindow] = useState(false);
-	const [showPaymentWindow, setShowPaymentWindow] = useState(false);
+	const [showShippingModal, setShowShippingModal] = useState(false);
+	const [showPaymentModal, setShowPaymentModal] = useState(false);
 
 	const handleShippingChange = (event) => {
 		setShippingOption(event.target.value);
@@ -77,6 +78,28 @@ const Cart = () => {
 		}
 	};
 
+	if (cart.length === 0) {
+		return (
+			<div className="text-center">
+				<h1>Your Cart is Empty</h1>
+				<p>
+					Start designing your custom jewelry or browse our ready-made
+					collection.
+				</p>
+				<div className="d-flex justify-content-center gap-3">
+					<Link to="/builder" className="btn btn-primary btn-lg rounded-pill">
+						Go to Builder
+					</Link>
+					<Link
+						to="/products"
+						className="btn btn-secondary btn-lg rounded-pill"
+					>
+						Shop Ready-Made
+					</Link>
+				</div>
+			</div>
+		);
+	}
 	return (
 		<div className="container mt-5">
 			<div className="row shadow-lg p-3 mb-5 bg-white rounded">
@@ -90,33 +113,39 @@ const Cart = () => {
 									className="list-group-item d-flex justify-content-between align-items-center"
 								>
 									<div className="d-flex align-items-center">
-										{item.productId?.image ? (
+										{item.productId ? (
 											<img
 												src={`${process.env.REACT_APP_API_URL}images/${item.productId.image}`}
 												alt={item.productId.name}
-												className="img-fluid mb-3"
+												className="img-fluid me-4"
+												style={{ maxWidth: "150px", maxHeight: "150px" }}
 											/>
-										) : item.customProduct ? (
-											<div>
-												<p className="mb-0">{item.customProduct.name}</p>
-												<p className="mb-0">
-													Price: {item.customProduct.price}
-												</p>
-												<p className="mb-0">
-													Description: {item.customProduct.description}
-												</p>
-											</div>
 										) : (
 											<img
-												src={`/images/default_${
-													item.productId?.type || "custom"
-												}.png`}
-												alt={item.productId?.name || "Custom Product"}
-												className="img-fluid mb-3"
+												src={`/images/default_${item.customProduct.type}.png`}
+												alt={item.customProduct.name}
+												className="img-fluid me-4"
+												style={{ maxWidth: "150px", maxHeight: "150px" }}
 											/>
 										)}
 										<div>
-											<p className="mb-0">Quantity: {item.quantity}</p>
+											<p className="mb-0">
+												{item.productId
+													? item.productId.name
+													: item.customProduct.name}
+											</p>
+											<p className="mb-0">
+												Price:{" "}
+												{item.productId
+													? item.productId.price
+													: item.customProduct.price}
+											</p>
+											<p className="mb-0">
+												Description:{" "}
+												{item.productId
+													? item.productId.description
+													: item.customProduct.description}
+											</p>
 										</div>
 									</div>
 									<button
@@ -154,14 +183,14 @@ const Cart = () => {
 							>
 								<option value="">Select Address</option>
 								{user?.shippingOptions.map((address, index) => (
-									<option key={index} value={address}>
-										{address}
+									<option key={index} value={address.addressLine1}>
+										{`${address.addressLine1}, ${address.city}, ${address.state}`}
 									</option>
 								))}
 							</select>
 							<button
 								className="btn btn-secondary mt-2"
-								onClick={() => setShowShippingWindow(true)}
+								onClick={() => setShowShippingModal(true)}
 							>
 								Add Shipping Address
 							</button>
@@ -184,14 +213,14 @@ const Cart = () => {
 							>
 								<option value="">Select Card</option>
 								{user?.paymentOptions.map((card, index) => (
-									<option key={index} value={card}>
-										{card}
+									<option key={index} value={card.cardNumber}>
+										{`${card.cardNumber} - ${card.cardType}`}
 									</option>
 								))}
 							</select>
 							<button
 								className="btn btn-secondary mt-2"
-								onClick={() => setShowPaymentWindow(true)}
+								onClick={() => setShowPaymentModal(true)}
 							>
 								Add Payment Method
 							</button>
@@ -202,15 +231,15 @@ const Cart = () => {
 					</div>
 				</div>
 			</div>
-			{showShippingWindow && (
-				<AddShippingWindow
-					onClose={() => setShowShippingWindow(false)}
+			{showShippingModal && (
+				<AddShippingModal
+					onClose={() => setShowShippingModal(false)}
 					onSubmit={handleAddShippingAddress}
 				/>
 			)}
-			{showPaymentWindow && (
+			{showPaymentModal && (
 				<AddPaymentWindow
-					onClose={() => setShowPaymentWindow(false)}
+					onClose={() => setShowPaymentModal(false)}
 					onSubmit={handleAddPaymentMethod}
 				/>
 			)}

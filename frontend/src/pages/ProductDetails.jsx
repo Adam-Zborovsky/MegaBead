@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { getProductById } from "../services/productServices";
+import { getProductById } from "../services/productService";
 import { CartContext } from "../context/CartContext";
 import { AuthContext } from "../context/AuthContext";
 import { NecklaceIcon } from "../customIcons/NecklaceIcon";
@@ -24,7 +24,7 @@ function ProductDetail() {
 
 	const handleAddToCart = () => {
 		if (user) {
-			const item = { productId: product.id, quantity: 1 };
+			const item = { productId: product._id, quantity: 1 };
 			addItemToCart(item);
 		}
 	};

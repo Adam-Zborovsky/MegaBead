@@ -1,7 +1,11 @@
-import { useState } from "react";
-import "../style/Modal.css"; // Assuming you have a CSS file for modal styles
+import { useState, useContext } from "react";
+import { toast } from "react-toastify";
+import { AuthContext } from "../context/AuthContext";
+import { updateUser } from "../services/userService";
+import "../style/Modal.css";
 
-const AddShippingWindow = ({ onClose, onSubmit }) => {
+const AddShippingModal = ({ onClose }) => {
+	const { user, token } = useContext(AuthContext);
 	const [shippingAddress, setShippingAddress] = useState({
 		addressLine1: "",
 		addressLine2: "",
@@ -17,8 +21,15 @@ const AddShippingWindow = ({ onClose, onSubmit }) => {
 	};
 
 	const handleSubmit = () => {
-		onSubmit(shippingAddress);
-		onClose();
+		const updatedShippingOptions = [...user.shippingOptions, shippingAddress];
+		updateUser(user._id, { shippingOptions: updatedShippingOptions }, token)
+			.then(() => {
+				toast.success("Shipping options updated successfully!");
+				onClose();
+			})
+			.catch(() => {
+				toast.error("Failed to update shipping options.");
+			});
 	};
 
 	return (
@@ -99,4 +110,4 @@ const AddShippingWindow = ({ onClose, onSubmit }) => {
 	);
 };
 
-export default AddShippingWindow;
+export default AddShippingModal;

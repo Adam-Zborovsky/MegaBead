@@ -3,7 +3,7 @@ import {
 	createProduct,
 	getProductById,
 	updateProduct,
-} from "../services/productServices";
+} from "../services/productService";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";

@@ -1,9 +1,9 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { updateUser, deleteUser } from "../services/userServices";
+import { updateUser, deleteUser } from "../services/userService";
 import { toast } from "react-toastify";
-import AddShippingWindow from "../components/AddShippingWindow";
-import AddPaymentWindow from "../components/AddPaymentWindow";
+import AddShippingModal from "../components/AddShippingModal";
+import AddPaymentModal from "../components/AddPaymentModal";
 import { useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 
@@ -11,14 +11,14 @@ const Profile = () => {
 	const { user, token, logout } = useContext(AuthContext);
 
 	const [formData, setFormData] = useState({
-		name: `${user.name?.first || ""} ${user.name?.last || ""}`,
-		email: user.email || "",
-		shippingOptions: user.shippingOptions || [],
-		paymentOptions: user.paymentOptions || [],
+		name: `${user?.name?.first || ""} ${user?.name?.last || ""}`,
+		email: user?.email || "",
+		shippingOptions: user?.shippingOptions || [],
+		paymentOptions: user?.paymentOptions || [],
 	});
 
-	const [showShippingWindow, setShowShippingWindow] = useState(false);
-	const [showPaymentWindow, setShowPaymentWindow] = useState(false);
+	const [showShippingModal, setShowShippingModal] = useState(false);
+	const [showPaymentModal, setShowPaymentModal] = useState(false);
 	const navigate = useNavigate();
 
 	const handleChange = (e) => {
@@ -66,6 +66,7 @@ const Profile = () => {
 			</div>
 		);
 	}
+
 	return (
 		<div className="container d-flex justify-content-center align-items-center my-4">
 			<div className="card shadow-lg p-4" style={{ width: "400px" }}>
@@ -102,8 +103,9 @@ const Profile = () => {
 							))}
 						</select>
 						<button
+							type="button"
 							className="btn btn-link p-0"
-							onClick={() => setShowShippingWindow(true)}
+							onClick={() => setShowShippingModal(true)}
 						>
 							<FaPlus />
 						</button>
@@ -119,8 +121,9 @@ const Profile = () => {
 							))}
 						</select>
 						<button
+							type="button"
 							className="btn btn-link p-0"
-							onClick={() => setShowPaymentWindow(true)}
+							onClick={() => setShowPaymentModal(true)}
 						>
 							<FaPlus />
 						</button>
@@ -150,11 +153,11 @@ const Profile = () => {
 					</div>
 				</form>
 			</div>
-			{showShippingWindow && (
-				<AddShippingWindow onClose={() => setShowShippingWindow(false)} />
+			{showShippingModal && (
+				<AddShippingModal onClose={() => setShowShippingModal(false)} />
 			)}
-			{showPaymentWindow && (
-				<AddPaymentWindow onClose={() => setShowPaymentWindow(false)} />
+			{showPaymentModal && (
+				<AddPaymentModal onClose={() => setShowPaymentModal(false)} />
 			)}
 		</div>
 	);

@@ -50,7 +50,7 @@ const shippingOptionSchema = new mongoose.Schema(
 		addressLine1: { type: String, required: true },
 		addressLine2: { type: String, required: false },
 		city: { type: String, required: true },
-		state: { type: String, required: true },
+		state: { type: String, required: false },
 		postalCode: { type: String, required: true },
 		country: { type: String, required: true },
 	},

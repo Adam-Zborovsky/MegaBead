@@ -1,8 +1,20 @@
 import { Link } from "react-router-dom";
 import { GiPrayerBeads } from "react-icons/gi";
 import { FaStore, FaHeart } from "react-icons/fa";
+import { useState, useEffect } from "react";
 
 const Home = () => {
+	const [isMobile, setIsMobile] = useState(false);
+
+	useEffect(() => {
+		const handleResize = () => {
+			setIsMobile(window.innerWidth <= 768);
+		};
+		window.addEventListener("resize", handleResize);
+		handleResize();
+		return () => window.removeEventListener("resize", handleResize);
+	}, []);
+
 	return (
 		<div className="container py-5">
 			<div className="row align-items-center mb-5">
@@ -12,7 +24,12 @@ const Home = () => {
 						Create beautiful bead jewelry with our intuitive builder.
 					</p>
 					<div className="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-md-start">
-						<Link to="/builder" className="btn btn-primary btn-lg rounded-pill">
+						<Link
+							to={isMobile ? "#" : "/builder"}
+							className={`btn btn-primary btn-lg rounded-pill ${
+								isMobile ? "disabled" : ""
+							}`}
+						>
 							Builder
 						</Link>
 						<Link
@@ -37,13 +54,14 @@ const Home = () => {
 							<GiPrayerBeads size={50} className="mb-3 text-primary" />
 							<h2>Intuitive Builder</h2>
 							<div>Drag & drop beads to design your piece.</div>
+							{isMobile && <div>(Desktop only For Now....)</div>}
 						</div>
 					</div>
 				</div>
 				<div className="col mb-4 md-4">
 					<div className="card h-100 border-0 rounded shadow-sm">
 						<div>
-							<FaStore size={50} className="mb-3 text-secondary" />
+							<FaStore size={50} className="mb-3 text-primary" />
 							<h2>Ready-Made Shop</h2>
 							<p>Browse handcrafted necklaces & bracelets.</p>
 						</div>

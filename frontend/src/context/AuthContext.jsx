@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import { getUserById } from "../services/userServices";
+import { getUserById } from "../services/userService";
 import { jwtDecode } from "jwt-decode";
 import { toast } from "react-toastify";
 

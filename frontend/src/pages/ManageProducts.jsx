@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { getAllProducts, deleteProduct } from "../services/productServices";
+import { getAllProducts, deleteProduct } from "../services/productService";
 import { toast } from "react-toastify";
 import { AuthContext } from "../context/AuthContext";
 

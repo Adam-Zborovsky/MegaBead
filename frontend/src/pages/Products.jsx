@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getAllProducts } from "../services/productServices";
+import { getAllProducts } from "../services/productService";
 import { NecklaceIcon } from "../customIcons/NecklaceIcon";
 import { BraceletIcon } from "../customIcons/BraceletIcon";
 

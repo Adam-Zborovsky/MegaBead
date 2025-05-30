@@ -48,7 +48,7 @@ export function getUserById(id, token) {
 	let config = {
 		method: "get",
 		maxBodyLength: Infinity,
-		url: apiURL + "/" + id,
+		url: apiURL + id,
 		headers: {
 			"Content-Type": "application/json",
 			"x-auth-token": token,
@@ -61,7 +61,7 @@ export function updateUser(id, data, token) {
 	let config = {
 		method: "put",
 		maxBodyLength: Infinity,
-		url: apiURL + "/" + id,
+		url: apiURL + id,
 		headers: {
 			"Content-Type": "application/json",
 			"x-auth-token": token,
@@ -76,7 +76,7 @@ export function deleteUser(id, token) {
 	let config = {
 		method: "delete",
 		maxBodyLength: Infinity,
-		url: apiURL + "/" + id,
+		url: apiURL + id,
 		headers: {
 			"Content-Type": "application/json",
 			"x-auth-token": token,

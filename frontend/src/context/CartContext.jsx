@@ -4,8 +4,9 @@ import {
 	addToCart,
 	removeFromCart,
 	addCustomProductToCart,
-} from "../services/cartServices";
+} from "../services/cartService";
 import { AuthContext } from "./AuthContext";
+import { toast } from "react-toastify";
 
 export const CartContext = createContext();
 
@@ -32,6 +33,7 @@ export const CartProvider = ({ children }) => {
 
 	const addItemToCart = async (item) => {
 		await addToCart(item, token);
+		toast.success("Item added to cart successfully!");
 		setCart((prevCart) => [...prevCart, item]);
 	};
 
@@ -43,6 +45,7 @@ export const CartProvider = ({ children }) => {
 	};
 
 	const addCustomItemToCart = async (customProduct, quantity) => {
+		toast.success("Item added to cart successfully!");
 		await addCustomProductToCart(customProduct, quantity, token);
 		setCart((prevCart) => [...prevCart, { customProduct, quantity }]);
 	};

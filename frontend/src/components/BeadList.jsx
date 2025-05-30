@@ -21,7 +21,6 @@ function BeadList({ beads, onRemoveBead, handleReset, isFull, onAddToCart }) {
 	const handleAddToCart = () => {
 		if (user) {
 			onAddToCart();
-			toast.success("Added to cart successfully!");
 		} else {
 			toast.error("Please log in to add items to the cart.");
 		}
