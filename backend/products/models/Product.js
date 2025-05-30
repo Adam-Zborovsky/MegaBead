@@ -30,7 +30,6 @@ const productSchema = new mongoose.Schema(
 	}
 );
 
-// Expose `id` instead of `_id`
 productSchema.virtual("id").get(function () {
 	return this._id.toHexString();
 });
