@@ -5,7 +5,7 @@ const corsMiddleware = cors({
 		"http://127.0.0.1:5500",
 		"http://localhost:5173",
 		"http://localhost:3000",
-		"https://pland.onrender.com",
+		"https://megabead-5kdb.onrender.com",
 		"http://192.168.1.117:3000",
 	],
 });
