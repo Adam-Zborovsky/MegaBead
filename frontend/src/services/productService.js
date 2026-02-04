@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiURL = process.env.REACT_APP_API_URL + "products/";
+const apiURL = process.env.REACT_APP_API_URL + "/products/";
 
 export function getAllProducts() {
 	let config = {
