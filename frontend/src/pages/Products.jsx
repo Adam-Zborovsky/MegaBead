@@ -27,7 +27,7 @@ function Products() {
 						<div className="card text-center">
 							{p.image ? (
 								<img
-									src={`${process.env.REACT_APP_API_URL}images/${p.image}`}
+									src={`${process.env.REACT_APP_API_URL}/images/${p.image}`}
 									alt={p.name}
 									className="img-fluid mb-3 rounded-5"
 								/>
