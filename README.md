@@ -60,20 +60,23 @@ MegaBead is a web application designed for bead enthusiasts to explore, upload, 
    cd backend
    npm install
    ```
-4. Install dependencies for the frontend:
+4. Add IP address to CORS:
+   In backend -> middlewares -> cors.js
+
+5. Install dependencies for the frontend:
    ```bash
    cd ../frontend
    npm install
    ```
-5. Set up environment variables:
+6. Set up environment variables:
    - Create `.env` files in both `backend` and `frontend` directories.
    - Add necessary variables like `REACT_APP_API_URL` and `JWT_SECRET`.
-6. Start the backend server:
+7. Start the backend server:
    ```bash
    cd backend
    npm start
    ```
-7. Start the frontend server:
+8. Start the frontend server:
    ```bash
    cd ../frontend
    npm start
