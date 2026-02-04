@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiURL = process.env.REACT_APP_API_URL + "users/";
+const apiURL = process.env.REACT_APP_API_URL + "/users/";
 
 export function registerUser(user) {
 	let config = {
