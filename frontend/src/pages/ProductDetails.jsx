@@ -40,7 +40,7 @@ function ProductDetail() {
 					<div className="col-md-6">
 						{product.image ? (
 							<img
-								src={`${process.env.REACT_APP_API_URL}images/${product.image}`}
+								src={`${process.env.REACT_APP_API_URL}/images/${product.image}`}
 								alt={product.name}
 								className="img-fluid mb-3  rounded-5"
 							/>
