@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiURL = process.env.REACT_APP_API_URL + "cart/";
+const apiURL = process.env.REACT_APP_API_URL + "/cart/";
 
 export function getCart(id, token) {
 	let config = {
