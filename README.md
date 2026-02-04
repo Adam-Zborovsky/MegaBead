@@ -2,7 +2,7 @@
 
 MegaBead is a web application designed for bead enthusiasts to explore, upload, and manage bead-related products. The platform provides a seamless experience for users to register, manage their profiles, upload products, and interact with a virtual bead jar.
 
-## Live On: https://megabead-5kdb.onrender.com
+## Live On: https://megabead.adamzborovsky.com
 
 ## Backend Docs On: https://www.postman.com/research-engineer-66453154/workspace/mega-bead
 
