@@ -1,0 +1,105 @@
+:root {
+	/* Cream & Brown palette */
+	--bs-body-bg: #f9f5f0; /* soft cream */
+	--bs-body-color: #4e342e; /* dark brown */
+	--bs-primary: #6d4c41; /* mid brown */
+	--bs-primary-text: #fff;
+	--bs-secondary: #8d6e63; /* lighter brown */
+	--bs-secondary-text: #fff;
+	--bs-light: #f9f5f0; /* cream for cards/forms */
+	--bs-light-text: #4e342e;
+	--bs-dark: #3e2723;
+	--bs-dark-text: #fff;
+}
+
+/* Base page styling */
+body {
+	background-color: var(--bs-body-bg) !important;
+	color: var(--bs-body-color) !important;
+}
+.bg-primary {
+	background-color: var(--bs-primary) !important;
+}
+.bg-secondary {
+	background-color: var(--bs-secondary) !important;
+}
+/* Links & headings */
+a,
+.nav-link,
+.navbar-brand {
+	color: var(--bs-light-text) !important;
+}
+.navbar-dark .nav-link:hover,
+.navbar-dark .navbar-brand:hover {
+	color: var(--bs-secondary-text) !important;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.card-title {
+	color: var(--bs-dark) !important;
+}
+
+/* Buttons */
+.btn-outline-primary {
+	color: var(--bs-primary) !important;
+	border-color: var(--bs-primary) !important;
+}
+.btn-outline-primary:hover {
+	background-color: var(--bs-primary) !important;
+	color: var(--bs-primary-text) !important;
+}
+.btn-primary {
+	background-color: var(--bs-primary) !important;
+	border-color: var(--bs-primary) !important;
+	color: var(--bs-primary-text) !important;
+}
+.btn-primary:hover {
+	background-color: var(--bs-dark) !important;
+	border-color: var(--bs-dark) !important;
+}
+.btn-secondary {
+	background-color: var(--bs-secondary) !important;
+	border-color: var(--bs-secondary) !important;
+	color: var(--bs-secondary-text) !important;
+}
+
+.text-primary {
+	color: var(--bs-primary) !important;
+}
+.text-secondary {
+	color: var(--bs-secondary-text) !important;
+}
+
+.card {
+	background-color: var(--bs-light) !important;
+	border: 2px solid var(--bs-primary);
+	border-radius: 0.75rem;
+	padding: 1.5rem;
+	box-shadow: 0 2px 4px rgba(var(--bs-primary-rgb), 0.1);
+	margin-bottom: 2rem;
+}
+.card .card-title {
+	color: var(--bs-primary) !important;
+}
+
+.form-control,
+.form-select {
+	background-color: var(--bs-light) !important;
+	color: var(--bs-body-color) !important;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.form-control::placeholder {
+	color: rgba(78, 52, 46, 0.6) !important;
+}
+.window {
+	background-color: var(--bs-secondary);
+	border: 2px solid var(--bs-primary);
+	border-radius: 0.5rem;
+	padding: 1.5rem;
+	box-shadow: 0 2px 4px rgba(var(--bs-primary-rgb), 0.1);
+	margin-bottom: 2rem;
+}

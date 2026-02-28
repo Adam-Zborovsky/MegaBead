@@ -1,0 +1,28 @@
+services:
+  backend:
+    build: ./backend
+    container_name: megabead-backend
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - PORT=8181
+    networks:
+      - megabead
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        - REACT_APP_API_URL=${REACT_APP_API_URL}
+    container_name: megabead-frontend
+    restart: unless-stopped
+    networks:
+      - megabead
+      - adam
+
+networks:
+  megabead:
+    driver: bridge
+  adam:
+    external: true
