@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const connectToDB = require("./DB/dbService");
+const seedProducts = require("./seed");
 const router = require("./router/router");
 const corsMiddleware = require("./middlewares/cors");
 const { loggerMiddleware } = require("./logger/loggerService");
@@ -11,7 +12,9 @@ const app = express();
 const PORT = process.env.PORT || 80;
 
 connectToDB()
-	.then(() => {
+	.then(async () => {
+		await seedProducts();
+
 		app.use(corsMiddleware);
 		app.use(express.json());
 		app.use(express.urlencoded({ extended: true }));

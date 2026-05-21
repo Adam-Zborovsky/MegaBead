@@ -1,4 +1,13 @@
 services:
+  megabead-mongo:
+    image: mongo:7
+    container_name: megabead-mongo
+    restart: unless-stopped
+    volumes:
+      - megabead_mongo_data:/data/db
+    networks:
+      - megabead
+
   backend:
     build: ./backend
     container_name: megabead-backend
@@ -7,6 +16,11 @@ services:
       - .env
     environment:
       - PORT=8181
+      - NODE_ENV=development
+    depends_on:
+      - megabead-mongo
+    volumes:
+      - ./backend/products/product-images:/app/products/product-images
     networks:
       - megabead
 
@@ -20,6 +34,9 @@ services:
     networks:
       - megabead
       - adam
+
+volumes:
+  megabead_mongo_data:
 
 networks:
   megabead:

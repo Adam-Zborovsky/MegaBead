@@ -1,0 +1,187 @@
+[{
+  "_id": {
+    "$oid": "68389ed5e395302a3946892c"
+  },
+  "name": "Aventurine",
+  "price": "75 ₪",
+  "type": "necklace",
+  "image": "1748541141842-aventurine-necklace.jpg",
+  "description": "It's an Aventurine Necklace",
+  "createdAt": {
+    "$date": "2025-05-29T17:52:21.878Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-29T18:59:29.613Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6838a0d3e395302a39468946"
+  },
+  "name": "Turquoise & Malachite",
+  "price": "45 ₪",
+  "type": "bracelet",
+  "image": "1748541651861-turquoise--malachite-bracelet.jpg",
+  "description": "It`s a Turquoise & Malachite Bracelet",
+  "createdAt": {
+    "$date": "2025-05-29T18:00:51.881Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-29T18:59:38.195Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6838a2ace395302a39468990"
+  },
+  "name": "Forest & Pink",
+  "price": "75 ₪",
+  "type": "necklace",
+  "image": "1748542124182-forest--pink-necklace.jpg",
+  "description": "Its a Forest & Pink Necklace",
+  "createdAt": {
+    "$date": "2025-05-29T18:08:44.187Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-29T18:59:42.965Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6838a2dbe395302a39468999"
+  },
+  "name": "Ocean",
+  "price": "45 ₪",
+  "type": "bracelet",
+  "image": "1748542171346-ocean-bracelet.jpg",
+  "description": "Its an Ocean Bracelet",
+  "createdAt": {
+    "$date": "2025-05-29T18:09:31.348Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-29T18:59:48.884Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6838a2efe395302a3946899b"
+  },
+  "name": "Onyx & Opal",
+  "price": "45 ₪",
+  "type": "bracelet",
+  "image": "1748542191631-onyx--opal-bracelet.jpg",
+  "description": "Its an Onyx & Opal Bracelet",
+  "createdAt": {
+    "$date": "2025-05-29T18:09:51.634Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-29T18:59:55.054Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6838a305e395302a3946899f"
+  },
+  "name": "Onyx & Opal",
+  "price": "75 ₪",
+  "type": "necklace",
+  "image": "1748542213268-onyx--opal-necklace.jpg",
+  "description": "Its an Onyx & Opal Necklace",
+  "createdAt": {
+    "$date": "2025-05-29T18:10:13.276Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-29T19:00:01.607Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6838a310e395302a394689a1"
+  },
+  "name": "Pink",
+  "price": "75 ₪",
+  "type": "necklace",
+  "image": "1748542224517-pink-necklace.jpg",
+  "description": "Its a Pink Necklace",
+  "createdAt": {
+    "$date": "2025-05-29T18:10:24.523Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-29T19:00:09.091Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6838a328e395302a394689a3"
+  },
+  "name": "Ruby & Honey",
+  "price": "45 ₪",
+  "type": "bracelet",
+  "image": "1748542248296-ruby--honey-bracelet.jpg",
+  "description": "Its a Ruby & Honey Bracelet",
+  "createdAt": {
+    "$date": "2025-05-29T18:10:48.299Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-29T19:00:14.621Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6838a33ce395302a394689a5"
+  },
+  "name": "Ruby & Honey",
+  "price": "45 ₪",
+  "type": "necklace",
+  "image": "1748542268988-ruby--honey-necklace.jpg",
+  "description": "Its a Ruby & Honey Necklace",
+  "createdAt": {
+    "$date": "2025-05-29T18:11:08.994Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-29T19:00:21.772Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6838a352e395302a394689a9"
+  },
+  "name": "Silver Rope",
+  "price": "45 ₪",
+  "type": "bracelet",
+  "image": "1748542290462-silver-rope-bracelet.jpg",
+  "description": "Its a Silver Rope Bracelet",
+  "createdAt": {
+    "$date": "2025-05-29T18:11:30.464Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-29T19:00:29.729Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6838a373e395302a394689ad"
+  },
+  "name": "Yellow",
+  "price": "75 ₪",
+  "type": "necklace",
+  "image": "1748542323092-yellow-necklace.jpg",
+  "description": "Its a Yellow Necklace",
+  "createdAt": {
+    "$date": "2025-05-29T18:12:03.097Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-29T19:00:37.351Z"
+  },
+  "__v": 0
+}]
