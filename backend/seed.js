@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const mongoose = require("mongoose");
-const Product = require("../products/models/Product");
+const Product = require("./products/models/Product");
 
 const parseExtendedJson = (obj) => {
 	if (obj === null || typeof obj !== "object") return obj;
