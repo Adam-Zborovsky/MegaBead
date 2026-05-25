@@ -5,7 +5,7 @@ import { updateUser } from "../services/userService";
 import "../style/Modal.css";
 
 const AddShippingModal = ({ onClose }) => {
-	const { user, token } = useContext(AuthContext);
+	const { user } = useContext(AuthContext);
 	const [shippingAddress, setShippingAddress] = useState({
 		addressLine1: "",
 		addressLine2: "",
@@ -22,7 +22,7 @@ const AddShippingModal = ({ onClose }) => {
 
 	const handleSubmit = () => {
 		const updatedShippingOptions = [...user.shippingOptions, shippingAddress];
-		updateUser(user._id, { shippingOptions: updatedShippingOptions }, token)
+		updateUser(user._id, { shippingOptions: updatedShippingOptions })
 			.then(() => {
 				toast.success("Shipping options updated successfully!");
 				onClose();

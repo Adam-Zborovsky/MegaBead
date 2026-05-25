@@ -5,7 +5,7 @@ import { updateUser } from "../services/userService";
 import "../style/Modal.css";
 
 const AddPaymentModal = ({ onClose, onSubmit }) => {
-	const { user, token } = useContext(AuthContext);
+	const { user } = useContext(AuthContext);
 	const [paymentDetails, setPaymentDetails] = useState({
 		cardHolderName: "",
 		cardNumber: "",
@@ -21,7 +21,7 @@ const AddPaymentModal = ({ onClose, onSubmit }) => {
 
 	const handleSubmit = () => {
 		const updatedPaymentOptions = [...user.paymentOptions, paymentDetails];
-		updateUser(user._id, { paymentOptions: updatedPaymentOptions }, token)
+		updateUser(user._id, { paymentOptions: updatedPaymentOptions })
 			.then(() => {
 				onSubmit(paymentDetails);
 				onClose();

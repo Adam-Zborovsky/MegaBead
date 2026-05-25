@@ -12,14 +12,14 @@ export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
 	const [cart, setCart] = useState([]);
-	const { user, token } = useContext(AuthContext);
+	const { user } = useContext(AuthContext);
 
 	useEffect(() => {
 		if (!user) {
 			setCart([]);
 			return;
 		}
-		getCart(user._id, token)
+		getCart(user._id)
 			.then((res) => {
 				if (res.data) {
 					setCart(res.data.cart);
@@ -29,16 +29,16 @@ export const CartProvider = ({ children }) => {
 				console.error("Failed to fetch cart", err);
 				setCart([]);
 			});
-	}, [user, token]);
+	}, [user]);
 
 	const addItemToCart = async (item) => {
-		await addToCart(item, token);
+		await addToCart(item);
 		toast.success("Item added to cart successfully!");
 		setCart((prevCart) => [...prevCart, item]);
 	};
 
 	const removeItemFromCart = async (productId) => {
-		await removeFromCart(user._id, productId, token);
+		await removeFromCart(user._id, productId);
 		setCart((prevCart) =>
 			prevCart.filter((item) => item.productId !== productId)
 		);
@@ -46,7 +46,7 @@ export const CartProvider = ({ children }) => {
 
 	const addCustomItemToCart = async (customProduct, quantity) => {
 		toast.success("Item added to cart successfully!");
-		await addCustomProductToCart(customProduct, quantity, token);
+		await addCustomProductToCart(customProduct, quantity);
 		setCart((prevCart) => [...prevCart, { customProduct, quantity }]);
 	};
 

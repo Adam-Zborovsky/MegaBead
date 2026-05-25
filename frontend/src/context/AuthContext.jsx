@@ -13,7 +13,14 @@ const AuthProvider = ({ children }) => {
 		const fetchUser = async () => {
 			if (token) {
 				try {
-					const userData = await getUserById(jwtDecode(token)._id, token);
+					const decoded = jwtDecode(token);
+					if (decoded.exp * 1000 < Date.now()) {
+						localStorage.removeItem("token");
+						setToken(null);
+						setUser(null);
+						return;
+					}
+					const userData = await getUserById(decoded._id);
 					setUser(userData.data);
 					setToken(token);
 				} catch (error) {

@@ -4,8 +4,10 @@ import Necklace from "../components/Necklace";
 import BeadList from "../components/BeadList";
 import LengthOptions from "../components/LengthOptions";
 import { CartContext } from "../context/CartContext";
+import { useDocumentTitle } from "../hooks/useDocumentTitle";
 
 function Builder() {
+	useDocumentTitle("Builder");
 	const [necklaceBeads, setNecklaceBeads] = useState([]);
 	const [isFull, setIsFull] = useState(false);
 	const [necklaceLength, setNecklaceLength] = useState(42);

@@ -43,6 +43,7 @@ function Necklace({ beads = [], length = 42 }) {
 			const removedIndex = oldBeads.findIndex(
 				(b) => !newBeads.some((n) => n.id === b.id)
 			);
+			if (removedIndex === -1) { prevBeadsRef.current = beads; return; }
 			const removedId = oldBeads[removedIndex].id;
 			const removedEl = container.querySelector(`[data-id="${removedId}"]`);
 			if (removedEl) {
