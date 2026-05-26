@@ -1,5 +1,25 @@
+/*
+ * Desktop hint: the remove button peeks up to full opacity once on mount,
+ * then returns to invisible. No persistent overlap with the count badge.
+ * After the animation the button lives at opacity 0 and only appears on hover.
+ */
+@keyframes remove-btn-peek {
+	0%,  30% { opacity: 0; }
+	50%, 70%  { opacity: 1; }
+	100%      { opacity: 0; }
+}
+
+/* ── Base styles ─────────────────────────────────────────── */
+
 .count-badge {
 	transition: opacity 0.2s;
+}
+
+/* Actions container: absolute overlay layout on desktop */
+.bead-item-actions {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
 }
 
 .remove-btn {
@@ -12,7 +32,14 @@
 	transition: opacity 0.2s;
 	font-size: 0.7rem;
 	padding: 2px 4px;
+	/* One-shot peek: plays once after a short delay, then stays at 0 */
+	animation: remove-btn-peek 1.6s ease 0.8s 1 forwards;
 }
+
+/* After animation completes, forwards fill leaves opacity at 0 (last keyframe).
+   Hover then overrides via the rule below. */
+
+/* ── Desktop hover ───────────────────────────────────────── */
 
 .list-group-item:hover .count-badge {
 	opacity: 0;
@@ -20,4 +47,30 @@
 
 .list-group-item:hover .remove-btn {
 	opacity: 1;
+	/* Override the animation fill so hover always wins */
+	animation: none;
+}
+
+/* ── Mobile (≤899px): side-by-side, no overlay ──────────── */
+/*
+ * On touch devices there is no hover, so the overlay pattern doesn't work.
+ * Show count and remove button next to each other; both always visible.
+ */
+@media (max-width: 899px) {
+	.bead-item-actions {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+	}
+
+	.bead-item-actions .remove-btn {
+		position: static; /* take it out of absolute flow so it sits beside the badge */
+		opacity: 0.75;
+		animation: none;
+	}
+
+	/* On mobile the count badge never needs to hide — there's no hover state */
+	.bead-item-actions .count-badge {
+		opacity: 1;
+	}
 }

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { NecklaceIcon } from "../customIcons/NecklaceIcon";
 import { BraceletIcon } from "../customIcons/BraceletIcon";
 
-function LengthOptions({ length, onLengthChange }) {
+function LengthOptions({ length, onLengthChange, rootClassName = "w-50" }) {
 	const [selectedType, setSelectedType] = useState("necklace");
 	const [selectedOption, setSelectedOption] = useState("42");
 	const [customValue, setCustomValue] = useState("");
@@ -53,7 +53,7 @@ function LengthOptions({ length, onLengthChange }) {
 
 	return (
 		<div
-			className="card shadow-sm p-3 w-50 "
+			className={`card shadow-sm p-3 ${rootClassName}`}
 			style={{ maxWidth: "400px", marginBottom: "1rem" }}
 		>
 			<div className="d-flex position-relative border rounded-pill overflow-hidden mb-3">
@@ -69,7 +69,9 @@ function LengthOptions({ length, onLengthChange }) {
 					<button
 						key={type}
 						type="button"
-						className={`flex-fill text-center py-1 btn fw-bold ${
+						title={type === "necklace" ? "Necklace mode" : "Bracelet mode"}
+						aria-label={type === "necklace" ? "Necklace mode" : "Bracelet mode"}
+						className={`flex-fill d-flex align-items-center justify-content-center py-1 btn fw-bold ${
 							selectedType === type ? "text-primary-text" : "text-primary"
 						}`}
 						onClick={() => setSelectedType(type)}

@@ -1,8 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import BeadJar from "./BeadJar";
 
-const BeadSelection = ({ onBeadSelect }) => {
+const BeadSelection = ({
+	onBeadSelect,
+	// Mobile-only props (undefined / no-ops on desktop)
+	activeJarId,
+	onJarActivate,
+	isFull = false,
+}) => {
 	const [beadsToLoad, setBeadsToLoad] = useState([]);
+	const containerRef = useRef(null);
 
 	useEffect(() => {
 		const beadTypes = [
@@ -68,15 +75,25 @@ const BeadSelection = ({ onBeadSelect }) => {
 		setBeadsToLoad(beadTypes);
 	}, []);
 
-	const handleBeadSelect = (beadData) => {
-		onBeadSelect(beadData);
-	};
+	// Close the active jar when the user taps outside the bead grid (mobile only)
+	useEffect(() => {
+		if (!onJarActivate) return;
+
+		const handleOutsideClick = (e) => {
+			if (containerRef.current && !containerRef.current.contains(e.target)) {
+				onJarActivate(null);
+			}
+		};
+
+		document.addEventListener("click", handleOutsideClick);
+		return () => document.removeEventListener("click", handleOutsideClick);
+	}, [onJarActivate]);
 
 	return (
-		<div className="container shadow-sm">
+		<div ref={containerRef} className="container shadow-sm">
 			<div className="row g-2 justify-content-center">
 				{beadsToLoad.map((bead) => (
-					<div key={bead.name} className="col-4">
+					<div key={bead.name} className="col-4 d-flex justify-content-center">
 						<BeadJar
 							jarImage={`/images/${bead.name}/jar.png`}
 							beadImage={
@@ -93,7 +110,10 @@ const BeadSelection = ({ onBeadSelect }) => {
 									  )
 									: []
 							}
-							onClick={handleBeadSelect}
+							onClick={onBeadSelect}
+							isActive={activeJarId === bead.name}
+							onActivate={() => onJarActivate && onJarActivate(bead.name)}
+							isFull={isFull}
 						/>
 					</div>
 				))}

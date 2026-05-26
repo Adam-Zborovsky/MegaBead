@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getAllProducts } from '../services/productService';
 import { ArrowRight, Wrench, ShoppingBag } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
@@ -23,15 +23,7 @@ const productImageUrl = (product: Product): string =>
 
 function Home() {
 	useDocumentTitle('');
-	const [isMobile, setIsMobile] = useState(false);
 	const [email, setEmail] = useState('');
-
-	useEffect(() => {
-		const handleResize = () => setIsMobile(window.innerWidth <= 768);
-		window.addEventListener('resize', handleResize);
-		handleResize();
-		return () => window.removeEventListener('resize', handleResize);
-	}, []);
 
 	const {
 		data: products,
@@ -76,19 +68,13 @@ function Home() {
 							meditative builder, handcrafted with pure intention.
 						</p>
 						<div className="flex flex-wrap items-center gap-4">
-							{isMobile ? (
-								<span className="inline-flex items-center gap-2 rounded-sm bg-linen px-5 py-3 text-sm font-medium text-clay/70">
-									Builder is desktop-only
-								</span>
-							) : (
-								<Link
-									to="/builder"
-									className="inline-flex items-center gap-2 rounded-sm bg-terracotta px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-terracotta/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-terracotta focus-visible:ring-offset-2 focus-visible:ring-offset-bone"
-								>
-									Start Building
-									<ArrowRight className="h-4 w-4" aria-hidden="true" />
-								</Link>
-							)}
+							<Link
+								to="/builder"
+								className="inline-flex items-center gap-2 rounded-sm bg-terracotta px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-terracotta/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-terracotta focus-visible:ring-offset-2 focus-visible:ring-offset-bone"
+							>
+								Start Building
+								<ArrowRight className="h-4 w-4" aria-hidden="true" />
+							</Link>
 							<Link
 								to="/products"
 								className="inline-flex items-center gap-2 text-sm font-medium text-clay underline underline-offset-4 transition-colors hover:text-terracotta"
@@ -181,22 +167,16 @@ function Home() {
 									weight to create a truly singular companion.
 								</p>
 							</div>
-							{isMobile ? (
-								<span className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-clay/50">
-									Desktop only
-								</span>
-							) : (
-								<Link
-									to="/builder"
-									className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-terracotta transition-colors hover:text-terracotta/80"
-								>
-									Start Custom Design
-									<ArrowRight
-										className="h-4 w-4 transition-transform group-hover:translate-x-1"
-										aria-hidden="true"
-									/>
-								</Link>
-							)}
+							<Link
+								to="/builder"
+								className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-terracotta transition-colors hover:text-terracotta/80"
+							>
+								Start Custom Design
+								<ArrowRight
+									className="h-4 w-4 transition-transform group-hover:translate-x-1"
+									aria-hidden="true"
+								/>
+							</Link>
 						</motion.div>
 					</div>
 				</div>

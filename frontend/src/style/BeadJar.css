@@ -11,14 +11,14 @@
 @media (max-width: 768px) {
 	.bead-jar-container {
 		width: 100px;
-		height: 170px;
+		height: 250px; /* maintain original 1:2.5 ratio */
 	}
 }
 
 @media (max-width: 480px) {
 	.bead-jar-container {
 		width: 80px;
-		height: 140px;
+		height: 200px; /* maintain original 1:2.5 ratio */
 	}
 }
 
@@ -77,4 +77,30 @@
 	position: absolute;
 	bottom: -20px;
 	left: 0;
+}
+
+/* Mobile: active jar gets a terracotta ring and a subtle scale-up */
+.bead-jar-container.is-active {
+	outline: 2px solid rgba(188, 94, 60, 0.45);
+	outline-offset: 3px;
+	border-radius: 6px;
+	transform: scale(1.05);
+	transition: transform 0.15s ease, outline 0.15s ease;
+}
+
+/*
+ * Mobile: necklace-full rejection shake.
+ * Uses the standalone `translate` CSS property (independent of `transform`)
+ * so the shake composites correctly whether or not .is-active (scale) is also applied.
+ */
+@keyframes jar-shake {
+	0%,  100% { translate: 0px 0px; }
+	20%        { translate: -5px 0px; }
+	40%        { translate:  5px 0px; }
+	60%        { translate: -4px 0px; }
+	80%        { translate:  4px 0px; }
+}
+
+.bead-jar-container.is-shaking {
+	animation: jar-shake 0.35s ease;
 }

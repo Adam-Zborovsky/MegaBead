@@ -29,7 +29,12 @@ function BeadList({ beads, onRemoveBead, handleReset, isFull, onAddToCart }) {
 	return (
 		<div className="card shadow-sm" style={{ border: "none", padding: "5px" }}>
 			<div className="card-header">
-				<h5 className="card-title mb-0">Bead List</h5>
+				<h5
+					className="card-title mb-0 text-center"
+					style={{ fontFamily: "var(--font-body)", fontWeight: 600 }}
+				>
+					Bead List
+				</h5>
 			</div>
 			<ul className="list-group list-group-flush">
 				{groups.map((group, index) => (
@@ -38,7 +43,7 @@ function BeadList({ beads, onRemoveBead, handleReset, isFull, onAddToCart }) {
 						className="list-group-item d-flex justify-content-between align-items-center"
 					>
 						<span>{group.bead.name}</span>
-						<span className="position-relative">
+						<span className="bead-item-actions">
 							<span className="badge bg-secondary count-badge">
 								{group.count}
 							</span>
