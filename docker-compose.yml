@@ -16,7 +16,6 @@ services:
       - .env
     environment:
       - PORT=8181
-      - NODE_ENV=development
     depends_on:
       - megabead-mongo
     volumes:
@@ -33,7 +32,7 @@ services:
     restart: unless-stopped
     networks:
       - megabead
-      - adam
+      - adam-cloud
 
 volumes:
   megabead_mongo_data:
@@ -41,5 +40,5 @@ volumes:
 networks:
   megabead:
     driver: bridge
-  adam:
+  adam-cloud:
     external: true

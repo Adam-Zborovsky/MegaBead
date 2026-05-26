@@ -20,12 +20,14 @@ connectToDB()
 		app.use(express.urlencoded({ extended: true }));
 		app.use(loggerMiddleware());
 
+		app.get("/health", (req, res) => res.sendStatus(200));
+
 		app.use(
 			"/images",
 			express.static(path.join(__dirname, "products/product-images"))
 		);
 
-		app.use("/", router);
+		app.use("/api", router);
 
 		app.use((err, req, res, next) => {
 			const status = err.status || 500;
