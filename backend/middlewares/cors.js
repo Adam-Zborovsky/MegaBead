@@ -2,7 +2,9 @@ const cors = require("cors");
 
 const corsMiddleware = cors({
 	origin: [
-		"https://megabead.adamzborovsky.com",
+		...(process.env.ALLOWED_ORIGINS
+			? process.env.ALLOWED_ORIGINS.split(",").map((o) => o.trim())
+			: []),
 		"http://localhost:3000",
 		"http://localhost:5173",
 	],
